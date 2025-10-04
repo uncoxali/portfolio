@@ -208,6 +208,9 @@ export default function Navigation() {
             className='glass px-6 py-2 rounded-full font-medium hover:bg-primary/20 transition-all duration-300 flex items-center gap-2'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              window.location.href = 'tel:+989104866595';
+            }}
           >
             <FiPhone className='text-lg' />
             Hire Me
@@ -326,12 +329,9 @@ export default function Navigation() {
                     <div className='mt-auto pt-6 border-t border-gray-800'>
                       <motion.button
                         onClick={() => {
-                          // Scroll to contact section
-                          const contactSection = document.getElementById('contact');
-                          if (contactSection) {
-                            contactSection.scrollIntoView({ behavior: 'smooth' });
-                            setIsOpen(false);
-                          }
+                          // Make phone call
+                          window.location.href = 'tel:+989104866595';
+                          setIsOpen(false);
                         }}
                         className='w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium text-white hover:from-primary/80 hover:to-secondary/80 transition-all duration-300 shadow-lg shadow-primary/20 flex items-center justify-center gap-2'
                         whileHover={{ scale: 1.02 }}

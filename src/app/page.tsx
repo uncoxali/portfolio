@@ -7,7 +7,6 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ScrollIndicator from '@/components/ScrollIndicator';
 import FloatingParticles from '@/components/FloatingParticles';
-import CustomCursor from '@/components/CustomCursor';
 import AboutSection from '@/components/AboutSection';
 import SkillsSection from '@/components/SkillsSection';
 import ExperienceSection from '@/components/ExperienceSection';
@@ -43,7 +42,6 @@ export default function Home() {
       <Navigation />
       <ScrollIndicator />
       <FloatingParticles />
-      <CustomCursor />
       <VisitorCounter />
       <HeroSection />
 

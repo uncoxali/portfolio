@@ -37,7 +37,7 @@ export async function POST(request: Request) {
         console.log('Sending email...');
         // Send email
         const result = await sendContactEmail({ name, email, message });
-        
+
         console.log('Email sent successfully:', result);
 
         return NextResponse.json(
@@ -54,13 +54,13 @@ export async function POST(request: Request) {
         );
     } catch (error: any) {
         console.error('Error in contact form API:', error);
-        
+
         // Provide more specific error messages
         let errorMessage = 'Failed to send message. Please try again later.';
         if (error.message) {
             errorMessage = error.message;
         }
-        
+
         return NextResponse.json(
             { error: errorMessage },
             { status: 500 }

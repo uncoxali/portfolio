@@ -10,6 +10,7 @@ import {
   FiMail,
   FiCoffee,
   FiChevronDown,
+  FiPhone,
 } from 'react-icons/fi';
 import MagneticButton from '@/components/MagneticButton';
 
@@ -23,13 +24,13 @@ export default function HeroSection() {
     controls.start({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      transition: { duration: 1.2, ease: 'easeOut' },
     });
 
     // Show scroll indicator after a delay
     const timer = setTimeout(() => {
       setShowScrollIndicator(true);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [controls]);
@@ -39,7 +40,7 @@ export default function HeroSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.2,
       },
     },
   };
@@ -49,7 +50,7 @@ export default function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.8 },
     },
   };
 
@@ -69,11 +70,11 @@ export default function HeroSection() {
         <motion.div
           className='absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl'
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+            scale: [1, 1.15, 1],
+            opacity: [0.2, 0.35, 0.2],
           }}
           transition={{
-            duration: 6,
+            duration: 12,
             repeat: Infinity,
             ease: 'easeInOut',
           }}
@@ -81,14 +82,14 @@ export default function HeroSection() {
         <motion.div
           className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-3xl'
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.4, 0.3],
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2],
           }}
           transition={{
-            duration: 8,
+            duration: 15,
             repeat: Infinity,
             ease: 'easeInOut',
-            delay: 1,
+            delay: 1.5,
           }}
         />
       </div>
@@ -108,7 +109,7 @@ export default function HeroSection() {
             className='text-5xl md:text-7xl font-bold mb-6'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1.2 }}
           >
             <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary'>
               Ali Mohammadi
@@ -120,7 +121,7 @@ export default function HeroSection() {
             className='text-2xl md:text-3xl font-light mb-8 text-gray-300 h-12'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
           >
             <TypingEffect
               texts={[
@@ -137,7 +138,7 @@ export default function HeroSection() {
             className='text-lg md:text-xl max-w-2xl mb-10 text-gray-400'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 1.2, delay: 0.6 }}
           >
             Crafting exceptional digital experiences with modern web technologies
             <br />
@@ -150,7 +151,7 @@ export default function HeroSection() {
             className='flex flex-wrap justify-center gap-4 mb-12'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 1.2, delay: 0.9 }}
           >
             <MagneticButton
               className='glass px-8 py-3 rounded-full font-medium flex items-center gap-2 hover:bg-primary/20 transition-all duration-300 group'
@@ -164,8 +165,11 @@ export default function HeroSection() {
               className='px-8 py-3 rounded-full font-medium bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 transition-all duration-300'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                window.location.href = 'tel:+989104866595';
+              }}
             >
-              View Projects
+              Hire Me
             </MagneticButton>
           </motion.div>
 
@@ -174,7 +178,7 @@ export default function HeroSection() {
             className='flex gap-6'
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 1.2, delay: 1.2 }}
           >
             {[
               {
@@ -212,14 +216,14 @@ export default function HeroSection() {
           className='absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer'
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 1.2, delay: 1.5 }}
           onClick={scrollToAbout}
         >
           <div className='flex flex-col items-center gap-2 text-gray-400 hover:text-primary transition-colors'>
             <span className='text-sm'>Scroll to explore</span>
             <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             >
               <FiChevronDown className='text-2xl' />
             </motion.div>
@@ -244,16 +248,16 @@ function TypingEffect({ texts }: { texts: string[] }) {
       if (isDeleting) {
         // Deleting text
         setCurrentText(current.substring(0, currentText.length - 1));
-        setTypingSpeed(100);
+        setTypingSpeed(80);
       } else {
         // Typing text
         setCurrentText(current.substring(0, currentText.length + 1));
-        setTypingSpeed(150);
+        setTypingSpeed(120);
       }
 
       // If text is fully typed
       if (!isDeleting && currentText === current) {
-        setTimeout(() => setIsDeleting(true), 1000);
+        setTimeout(() => setIsDeleting(true), 1500);
         return;
       }
 
@@ -261,7 +265,7 @@ function TypingEffect({ texts }: { texts: string[] }) {
       if (isDeleting && currentText === '') {
         setIsDeleting(false);
         setCurrentIndex((currentIndex + 1) % texts.length);
-        setTypingSpeed(500);
+        setTypingSpeed(800);
         return;
       }
     };
@@ -286,11 +290,11 @@ function FloatingElements() {
       <motion.div
         className='absolute top-1/4 left-10 text-primary opacity-20'
         animate={{
-          y: [0, -20, 0],
-          rotate: [0, 5, 0],
+          y: [0, -15, 0],
+          rotate: [0, 3, 0],
         }}
         transition={{
-          duration: 4,
+          duration: 8,
           repeat: Infinity,
           ease: 'easeInOut',
         }}
@@ -302,14 +306,14 @@ function FloatingElements() {
       <motion.div
         className='absolute bottom-1/4 right-10 text-yellow-400 opacity-30'
         animate={{
-          y: [0, -15, 0],
-          rotate: [0, 10, 0],
+          y: [0, -10, 0],
+          rotate: [0, 5, 0],
         }}
         transition={{
-          duration: 3,
+          duration: 6,
           repeat: Infinity,
           ease: 'easeInOut',
-          delay: 0.5,
+          delay: 1,
         }}
       >
         <svg
@@ -326,14 +330,14 @@ function FloatingElements() {
       <motion.div
         className='absolute top-1/3 right-1/4 text-secondary opacity-20'
         animate={{
-          y: [0, -10, 0],
-          rotate: [0, 15, 0],
+          y: [0, -8, 0],
+          rotate: [0, 8, 0],
         }}
         transition={{
-          duration: 5,
+          duration: 10,
           repeat: Infinity,
           ease: 'easeInOut',
-          delay: 1,
+          delay: 2,
         }}
       >
         <svg
