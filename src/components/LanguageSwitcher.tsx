@@ -23,10 +23,10 @@ export default function LanguageSwitcher() {
     setCurrentLanguage(languageCode);
     localStorage.setItem('language', languageCode);
     setIsOpen(false);
-    
+
     // In a real implementation, you would trigger a language change
     // For now, we'll just show an alert
-    alert(`Language switched to ${languages.find(lang => lang.code === languageCode)?.name}`);
+    alert(`Language switched to ${languages.find((lang) => lang.code === languageCode)?.name}`);
   };
 
   return (

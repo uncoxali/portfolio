@@ -2,7 +2,19 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiCheck, FiX, FiSend, FiMapPin, FiPhone, FiUser, FiMessageSquare } from 'react-icons/fi';
+import {
+  FiLinkedin,
+  FiGithub,
+  FiTwitter,
+  FiMail,
+  FiCheck,
+  FiX,
+  FiSend,
+  FiMapPin,
+  FiPhone,
+  FiUser,
+  FiMessageSquare,
+} from 'react-icons/fi';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -31,9 +43,9 @@ export default function ContactSection() {
 
   useEffect(() => {
     if (submitStatus.type) {
-      controls.start({ 
+      controls.start({
         scale: [1, 1.05, 1],
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3 },
       });
     }
   }, [submitStatus, controls]);
@@ -47,7 +59,7 @@ export default function ContactSection() {
 
     // Clear error when user starts typing
     if (errors[id as keyof typeof errors]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [id]: '',
       }));
@@ -177,63 +189,68 @@ export default function ContactSection() {
             <div>
               <h3 className='text-2xl font-semibold mb-6'>Let's Connect</h3>
               <p className='text-gray-400 mb-8'>
-                I'm currently available for freelance work and open to new opportunities. Feel free to
-                reach out if you want to collaborate or just say hello! You can send me a direct email
-                at <a href="mailto:alif.mohamady20@gmail.com" className="text-primary hover:underline">alif.mohamady20@gmail.com</a>
+                I'm currently available for freelance work and open to new opportunities. Feel free
+                to reach out if you want to collaborate or just say hello! You can send me a direct
+                email at{' '}
+                <a href='mailto:alif.mohamady20@gmail.com' className='text-primary hover:underline'>
+                  alif.mohamady20@gmail.com
+                </a>
               </p>
             </div>
 
             {/* Contact details */}
             <div className='space-y-6'>
-              <motion.div
-                className='flex items-start group'
-                whileHover={{ x: 5 }}
-              >
+              <motion.div className='flex items-start group' whileHover={{ x: 5 }}>
                 <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
                   <FiMail className='text-primary text-xl' />
                 </div>
                 <div>
                   <p className='text-gray-400 text-sm'>Email</p>
-                  <a href="mailto:alif.mohamady20@gmail.com" className="hover:text-primary transition-colors">alif.mohamady20@gmail.com</a>
+                  <a
+                    href='mailto:alif.mohamady20@gmail.com'
+                    className='hover:text-primary transition-colors'
+                  >
+                    alif.mohamady20@gmail.com
+                  </a>
                 </div>
               </motion.div>
-              
-              <motion.div
-                className='flex items-start group'
-                whileHover={{ x: 5 }}
-              >
+
+              <motion.div className='flex items-start group' whileHover={{ x: 5 }}>
                 <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
                   <FiPhone className='text-primary text-xl' />
                 </div>
                 <div>
                   <p className='text-gray-400 text-sm'>Phone</p>
-                  <a href="tel:+989104866595" className="hover:text-primary transition-colors">+98 910 486 6595</a>
+                  <a href='tel:+989104866595' className='hover:text-primary transition-colors'>
+                    +98 910 486 6595
+                  </a>
                 </div>
               </motion.div>
-              
-              <motion.div
-                className='flex items-start group'
-                whileHover={{ x: 5 }}
-              >
+
+              <motion.div className='flex items-start group' whileHover={{ x: 5 }}>
                 <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
                   <FiMapPin className='text-primary text-xl' />
                 </div>
                 <div>
                   <p className='text-gray-400 text-sm'>Location</p>
-                  <p className="text-gray-300">Tehran, Iran (Remote Worldwide)</p>
+                  <p className='text-gray-300'>Tehran, Iran (Remote Worldwide)</p>
                 </div>
               </motion.div>
-              
-              <motion.div
-                className='flex items-start group'
-                whileHover={{ x: 5 }}
-              >
+
+              <motion.div className='flex items-start group' whileHover={{ x: 5 }}>
                 <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
                   <FiLinkedin className='text-primary text-xl' />
                 </div>
                 <div>
                   <p className='text-gray-400 text-sm'>LinkedIn</p>
-                  <a href="https://www.linkedin.com/in/ali-mohammadi20" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">linkedin.com/in/ali-mohammadi20</a>
+                  <a
+                    href='https://www.linkedin.com/in/ali-mohammadi20'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='hover:text-primary transition-colors'
+                  >
+                    linkedin.com/in/ali-mohammadi20
+                  </a>
                 </div>
               </motion.div>
             </div>
@@ -243,21 +260,41 @@ export default function ContactSection() {
               <h4 className='text-lg font-semibold mb-4'>Follow Me</h4>
               <div className='flex gap-4'>
                 {[
-                  { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/ali-mohammadi20', label: 'LinkedIn', color: 'hover:text-blue-500' },
-                  { Icon: FiGithub, href: 'https://github.com/alimohamadi', label: 'GitHub', color: 'hover:text-gray-300' },
-                  { Icon: FiTwitter, href: 'https://twitter.com/alimohamadi', label: 'Twitter', color: 'hover:text-blue-400' },
-                  { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email', color: 'hover:text-red-500' }
+                  {
+                    Icon: FiLinkedin,
+                    href: 'https://www.linkedin.com/in/ali-mohammadi20',
+                    label: 'LinkedIn',
+                    color: 'hover:text-blue-500',
+                  },
+                  {
+                    Icon: FiGithub,
+                    href: 'https://github.com/alimohamadi',
+                    label: 'GitHub',
+                    color: 'hover:text-gray-300',
+                  },
+                  {
+                    Icon: FiTwitter,
+                    href: 'https://twitter.com/alimohamadi',
+                    label: 'Twitter',
+                    color: 'hover:text-blue-400',
+                  },
+                  {
+                    Icon: FiMail,
+                    href: 'mailto:alif.mohamady20@gmail.com',
+                    label: 'Email',
+                    color: 'hover:text-red-500',
+                  },
                 ].map(({ Icon, href, label, color }, index) => (
                   <motion.a
                     key={index}
                     href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                     aria-label={label}
                     className={`glass w-12 h-12 rounded-full flex items-center justify-center text-gray-400 ${color} transition-colors duration-300 group`}
-                    whileHover={{ 
+                    whileHover={{
                       y: -5,
-                      backgroundColor: "rgba(99, 102, 241, 0.2)"
+                      backgroundColor: 'rgba(99, 102, 241, 0.2)',
                     }}
                     whileTap={{ scale: 0.9 }}
                   >
@@ -278,7 +315,10 @@ export default function ContactSection() {
           >
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div>
-                <label htmlFor='name' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                <label
+                  htmlFor='name'
+                  className='block mb-2 text-sm font-medium flex items-center gap-2'
+                >
                   <FiUser /> Name
                 </label>
                 <input
@@ -295,7 +335,10 @@ export default function ContactSection() {
                 {errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
               </div>
               <div>
-                <label htmlFor='email' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                <label
+                  htmlFor='email'
+                  className='block mb-2 text-sm font-medium flex items-center gap-2'
+                >
                   <FiMail /> Email
                 </label>
                 <input
@@ -312,7 +355,10 @@ export default function ContactSection() {
                 {errors.email && <p className='text-red-500 text-sm mt-1'>{errors.email}</p>}
               </div>
               <div>
-                <label htmlFor='message' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                <label
+                  htmlFor='message'
+                  className='block mb-2 text-sm font-medium flex items-center gap-2'
+                >
                   <FiMessageSquare /> Message
                 </label>
                 <textarea
@@ -321,7 +367,9 @@ export default function ContactSection() {
                   value={formData.message}
                   onChange={handleChange}
                   className={`glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all ${
-                    errors.message ? 'focus:ring-red-500 border border-red-500' : 'focus:ring-primary'
+                    errors.message
+                      ? 'focus:ring-red-500 border border-red-500'
+                      : 'focus:ring-primary'
                   }`}
                   placeholder='Your message...'
                   disabled={isSubmitting}
@@ -333,9 +381,7 @@ export default function ContactSection() {
                 * All messages will be sent directly to Ali Mohammadi's email
               </p>
 
-              <motion.div
-                animate={controls}
-              >
+              <motion.div animate={controls}>
                 {submitStatus.type && (
                   <div
                     className={`p-4 rounded-lg flex items-center gap-3 ${
@@ -367,9 +413,25 @@ export default function ContactSection() {
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                    >
+                      <circle
+                        className='opacity-25'
+                        cx='12'
+                        cy='12'
+                        r='10'
+                        stroke='currentColor'
+                        strokeWidth='4'
+                      ></circle>
+                      <path
+                        className='opacity-75'
+                        fill='currentColor'
+                        d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                      ></path>
                     </svg>
                     Sending...
                   </>

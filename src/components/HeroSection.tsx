@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { FiDownload, FiLinkedin, FiGithub, FiTwitter, FiMail, FiCoffee, FiChevronDown } from 'react-icons/fi';
+import {
+  FiDownload,
+  FiLinkedin,
+  FiGithub,
+  FiTwitter,
+  FiMail,
+  FiCoffee,
+  FiChevronDown,
+} from 'react-icons/fi';
 import MagneticButton from '@/components/MagneticButton';
 
 export default function HeroSection() {
@@ -15,7 +23,7 @@ export default function HeroSection() {
     controls.start({
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 0.8, ease: 'easeOut' },
     });
 
     // Show scroll indicator after a delay
@@ -31,9 +39,9 @@ export default function HeroSection() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -41,8 +49,8 @@ export default function HeroSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   // Function to scroll to about section
@@ -58,7 +66,7 @@ export default function HeroSection() {
       {/* Animated gradient background */}
       <div className='absolute inset-0 z-0'>
         <div className='absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 via-secondary/10 to-dark-bg'></div>
-        <motion.div 
+        <motion.div
           className='absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl'
           animate={{
             scale: [1, 1.2, 1],
@@ -67,10 +75,10 @@ export default function HeroSection() {
           transition={{
             duration: 6,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         />
-        <motion.div 
+        <motion.div
           className='absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-3xl'
           animate={{
             scale: [1, 1.3, 1],
@@ -79,8 +87,8 @@ export default function HeroSection() {
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
+            ease: 'easeInOut',
+            delay: 1,
           }}
         />
       </div>
@@ -89,11 +97,11 @@ export default function HeroSection() {
       <FloatingElements />
 
       <div className='container mx-auto px-4 z-10'>
-        <motion.div 
+        <motion.div
           className='flex flex-col items-center text-center'
           variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          initial='hidden'
+          animate='visible'
         >
           {/* Animated name reveal */}
           <motion.h1
@@ -114,13 +122,13 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <TypingEffect 
+            <TypingEffect
               texts={[
-                "Senior Frontend Developer",
-                "UI/UX Enthusiast",
-                "React Specialist",
-                "Problem Solver"
-              ]} 
+                'Senior Frontend Developer',
+                'UI/UX Enthusiast',
+                'React Specialist',
+                'Problem Solver',
+              ]}
             />
           </motion.div>
 
@@ -133,8 +141,8 @@ export default function HeroSection() {
           >
             Crafting exceptional digital experiences with modern web technologies
             <br />
-            <span className='text-primary'>Based in Tehran, Iran</span> • Available for remote opportunities
-            worldwide
+            <span className='text-primary'>Based in Tehran, Iran</span> • Available for remote
+            opportunities worldwide
           </motion.p>
 
           {/* Call-to-action buttons */}
@@ -144,7 +152,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <MagneticButton 
+            <MagneticButton
               className='glass px-8 py-3 rounded-full font-medium flex items-center gap-2 hover:bg-primary/20 transition-all duration-300 group'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -152,7 +160,7 @@ export default function HeroSection() {
               <FiDownload className='group-hover:animate-bounce' />
               Download Resume
             </MagneticButton>
-            <MagneticButton 
+            <MagneticButton
               className='px-8 py-3 rounded-full font-medium bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 transition-all duration-300'
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -169,21 +177,25 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             {[
-              { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/ali-mohammadi20', label: 'LinkedIn' },
+              {
+                Icon: FiLinkedin,
+                href: 'https://www.linkedin.com/in/ali-mohammadi20',
+                label: 'LinkedIn',
+              },
               { Icon: FiGithub, href: 'https://github.com/alimohamadi', label: 'GitHub' },
               { Icon: FiTwitter, href: 'https://twitter.com/alimohamadi', label: 'Twitter' },
-              { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email' }
+              { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email' },
             ].map(({ Icon, href, label }, index) => (
               <MagneticButton
                 key={index}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
                 aria-label={label}
                 className='glass w-14 h-14 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group'
-                whileHover={{ 
+                whileHover={{
                   y: -5,
-                  backgroundColor: "rgba(99, 102, 241, 0.2)"
+                  backgroundColor: 'rgba(99, 102, 241, 0.2)',
                 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -228,7 +240,7 @@ function TypingEffect({ texts }: { texts: string[] }) {
   useEffect(() => {
     const handleTyping = () => {
       const current = texts[currentIndex];
-      
+
       if (isDeleting) {
         // Deleting text
         setCurrentText(current.substring(0, currentText.length - 1));
@@ -261,7 +273,7 @@ function TypingEffect({ texts }: { texts: string[] }) {
   return (
     <span>
       {currentText}
-      <span className="ml-1 inline-block w-1 h-8 bg-primary align-middle animate-pulse"></span>
+      <span className='ml-1 inline-block w-1 h-8 bg-primary align-middle animate-pulse'></span>
     </span>
   );
 }
@@ -280,7 +292,7 @@ function FloatingElements() {
         transition={{
           duration: 4,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: 'easeInOut',
         }}
       >
         <FiCoffee className='text-4xl' />
@@ -296,12 +308,17 @@ function FloatingElements() {
         transition={{
           duration: 3,
           repeat: Infinity,
-          ease: "easeInOut",
-          delay: 0.5
+          ease: 'easeInOut',
+          delay: 0.5,
         }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className='h-8 w-8'
+          viewBox='0 0 20 20'
+          fill='currentColor'
+        >
+          <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z' />
         </svg>
       </motion.div>
 
@@ -315,12 +332,23 @@ function FloatingElements() {
         transition={{
           duration: 5,
           repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
+          ease: 'easeInOut',
+          delay: 1,
         }}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className='h-6 w-6'
+          fill='none'
+          viewBox='0 0 24 24'
+          stroke='currentColor'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M12 6v6m0 0v6m0-6h6m-6 0H6'
+          />
         </svg>
       </motion.div>
     </>

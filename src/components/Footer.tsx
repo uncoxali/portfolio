@@ -2,7 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiHeart, FiCoffee, FiCode, FiGlobe, FiMapPin, FiPhone } from 'react-icons/fi';
+import {
+  FiLinkedin,
+  FiGithub,
+  FiTwitter,
+  FiMail,
+  FiHeart,
+  FiCoffee,
+  FiCode,
+  FiGlobe,
+  FiMapPin,
+  FiPhone,
+} from 'react-icons/fi';
 
 export default function Footer() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -20,29 +31,29 @@ export default function Footer() {
   }, []);
 
   const socialLinks = [
-    { 
-      Icon: FiLinkedin, 
-      href: 'https://www.linkedin.com/in/ali-mohammadi20', 
+    {
+      Icon: FiLinkedin,
+      href: 'https://www.linkedin.com/in/ali-mohammadi20',
       label: 'LinkedIn',
-      color: 'hover:text-blue-500'
+      color: 'hover:text-blue-500',
     },
-    { 
-      Icon: FiGithub, 
-      href: 'https://github.com/alimohamadi', 
+    {
+      Icon: FiGithub,
+      href: 'https://github.com/alimohamadi',
       label: 'GitHub',
-      color: 'hover:text-gray-300'
+      color: 'hover:text-gray-300',
     },
-    { 
-      Icon: FiTwitter, 
-      href: 'https://twitter.com/alimohamadi', 
+    {
+      Icon: FiTwitter,
+      href: 'https://twitter.com/alimohamadi',
       label: 'Twitter',
-      color: 'hover:text-blue-400'
+      color: 'hover:text-blue-400',
     },
-    { 
-      Icon: FiMail, 
-      href: 'mailto:alif.mohamady20@gmail.com', 
+    {
+      Icon: FiMail,
+      href: 'mailto:alif.mohamady20@gmail.com',
       label: 'Email',
-      color: 'hover:text-red-500'
+      color: 'hover:text-red-500',
     },
   ];
 
@@ -101,12 +112,9 @@ export default function Footer() {
             <h3 className='text-lg font-semibold mb-4'>Quick Links</h3>
             <ul className='space-y-2'>
               {quickLinks.map((link, index) => (
-                <motion.li
-                  key={index}
-                  whileHover={{ x: 5 }}
-                >
-                  <a 
-                    href={link.href} 
+                <motion.li key={index} whileHover={{ x: 5 }}>
+                  <a
+                    href={link.href}
                     className='text-gray-400 hover:text-primary transition-colors flex items-center gap-2'
                   >
                     <span className='w-1 h-1 rounded-full bg-primary'></span>
@@ -160,13 +168,13 @@ export default function Footer() {
                 <motion.a
                   key={index}
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target='_blank'
+                  rel='noopener noreferrer'
                   aria-label={label}
                   className={`glass w-12 h-12 rounded-full flex items-center justify-center text-gray-400 ${color} transition-colors duration-300`}
-                  whileHover={{ 
+                  whileHover={{
                     y: -5,
-                    backgroundColor: "rgba(99, 102, 241, 0.2)"
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
                   }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -182,7 +190,7 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <motion.div 
+        <motion.div
           className='h-px bg-gradient-to-r from-transparent via-primary to-transparent my-8'
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
@@ -199,14 +207,13 @@ export default function Footer() {
           className='flex flex-col md:flex-row justify-between items-center gap-4'
         >
           <div className='text-gray-500 text-sm'>
-            <p>
-              © {new Date().getFullYear()} Ali Mohammadi. All rights reserved.
-            </p>
+            <p>© {new Date().getFullYear()} Ali Mohammadi. All rights reserved.</p>
           </div>
           <div className='text-gray-500 text-sm flex flex-wrap items-center gap-4'>
             <p>Current Time: {currentTime.toLocaleTimeString()}</p>
             <p className='flex items-center gap-1'>
-              Made with <FiHeart className='inline text-red-500' /> and lots of <FiCoffee className='inline text-yellow-500' />
+              Made with <FiHeart className='inline text-red-500' /> and lots of{' '}
+              <FiCoffee className='inline text-yellow-500' />
             </p>
           </div>
         </motion.div>

@@ -19,13 +19,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // Check system preference for dark mode
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const storedDarkMode = localStorage.getItem('darkMode');
-    
+
     if (storedDarkMode !== null) {
       setDarkMode(storedDarkMode === 'true');
     } else {
       setDarkMode(systemPrefersDark);
     }
-    
+
     // Check stored language preference
     const storedLanguage = localStorage.getItem('language') || 'en';
     setLanguage(storedLanguage);
@@ -38,7 +38,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    
+
     // Save preference
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);

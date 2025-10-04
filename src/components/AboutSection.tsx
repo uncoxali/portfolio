@@ -22,18 +22,21 @@ export default function AboutSection() {
     summary: {
       title: 'Professional Summary',
       text: 'Senior Frontend Developer with 6+ years of experience building responsive, user-friendly web applications using modern technologies like React, Next.js, and TypeScript. Passionate about creating exceptional digital experiences with clean, efficient code.',
-      additionalText: 'Experienced in working with international teams across Iran, Turkey, Germany, and Canada. Skilled in both frontend development and UI/UX design principles to deliver high-quality solutions that meet business requirements. Specialized in creating performant, accessible, and scalable web applications that provide seamless user experiences across all devices.'
+      additionalText:
+        'Experienced in working with international teams across Iran, Turkey, Germany, and Canada. Skilled in both frontend development and UI/UX design principles to deliver high-quality solutions that meet business requirements. Specialized in creating performant, accessible, and scalable web applications that provide seamless user experiences across all devices.',
     },
     approach: {
       title: 'My Approach',
       text: 'I believe in building products that not only look great but also solve real problems. My approach combines technical excellence with user-centered design principles to create solutions that are both functional and beautiful.',
-      additionalText: 'I focus on writing maintainable, scalable code while staying up-to-date with the latest industry trends and best practices. Collaboration and communication are key to delivering successful projects. I work closely with designers, backend developers, and stakeholders to ensure alignment and deliver exceptional results.'
+      additionalText:
+        'I focus on writing maintainable, scalable code while staying up-to-date with the latest industry trends and best practices. Collaboration and communication are key to delivering successful projects. I work closely with designers, backend developers, and stakeholders to ensure alignment and deliver exceptional results.',
     },
     philosophy: {
       title: 'Development Philosophy',
       text: 'Code is poetry, and every line should be written with intention. I strive to create clean, efficient solutions that stand the test of time while being easy to maintain and extend.',
-      additionalText: 'Continuous learning and improvement are at the core of my philosophy. I believe in pushing boundaries while maintaining a strong foundation in fundamentals. I embrace challenges as opportunities to grow and always strive to deliver more than expected.'
-    }
+      additionalText:
+        'Continuous learning and improvement are at the core of my philosophy. I believe in pushing boundaries while maintaining a strong foundation in fundamentals. I embrace challenges as opportunities to grow and always strive to deliver more than expected.',
+    },
   };
 
   return (
@@ -89,7 +92,9 @@ export default function AboutSection() {
             transition={{ duration: 0.5 }}
             className='glass p-8 rounded-2xl'
           >
-            <h3 className='text-2xl font-semibold mb-6 text-primary'>{content[activeTab as keyof typeof content].title}</h3>
+            <h3 className='text-2xl font-semibold mb-6 text-primary'>
+              {content[activeTab as keyof typeof content].title}
+            </h3>
             <TextReveal
               text={content[activeTab as keyof typeof content].text}
               className='text-gray-300 mb-6 text-lg'
@@ -145,16 +150,16 @@ export default function AboutSection() {
               'Accessibility',
               'Testing',
               'CI/CD',
-              'Problem Solving'
+              'Problem Solving',
             ].map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: 0.8 + index * 0.05 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.05,
-                  backgroundColor: "rgba(99, 102, 241, 0.2)"
+                  backgroundColor: 'rgba(99, 102, 241, 0.2)',
                 }}
                 className='glass px-4 py-2 rounded-full text-sm'
               >

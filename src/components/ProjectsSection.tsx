@@ -84,9 +84,10 @@ export default function ProjectsSection() {
     { id: 'mobile', label: 'Mobile Apps' },
   ];
 
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === activeFilter);
+  const filteredProjects =
+    activeFilter === 'all'
+      ? projects
+      : projects.filter((project) => project.category === activeFilter);
 
   const handleProjectHover = (index: number, isHovered: boolean) => {
     setHoveredProject(isHovered ? index : null);
@@ -104,7 +105,7 @@ export default function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
           className='text-center mb-16'
         >
@@ -113,7 +114,8 @@ export default function ProjectsSection() {
           </h2>
           <div className='w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full'></div>
           <p className='text-gray-400 max-w-2xl mx-auto mt-6'>
-            Here are some of my recent projects. Each one presented unique challenges and opportunities to grow.
+            Here are some of my recent projects. Each one presented unique challenges and
+            opportunities to grow.
           </p>
         </motion.div>
 
@@ -143,11 +145,11 @@ export default function ProjectsSection() {
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ 
-                duration: 0.7, 
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{
+                duration: 0.7,
                 delay: index * 0.1,
-                ease: "easeOut"
+                ease: 'easeOut',
               }}
               whileHover={{ y: -10 }}
               className='glass rounded-2xl overflow-hidden group relative'
@@ -163,11 +165,11 @@ export default function ProjectsSection() {
                     style={{ animationDelay: '0.5s' }}
                   ></div>
                 </div>
-                
+
                 {/* Animated border effect on hover */}
                 <AnimatePresence>
                   {hoveredProject === index && (
-                    <motion.div 
+                    <motion.div
                       className='absolute inset-0 border-2 border-primary rounded-2xl'
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -176,16 +178,16 @@ export default function ProjectsSection() {
                     />
                   )}
                 </AnimatePresence>
-                
+
                 <div className='absolute inset-0 bg-gradient-to-t from-dark-bg to-transparent opacity-80'></div>
-                
+
                 {/* Project category badge */}
                 <div className='absolute top-4 left-4'>
                   <span className='px-3 py-1 bg-primary/20 text-primary text-xs rounded-full'>
                     {project.category}
                   </span>
                 </div>
-                
+
                 {/* Featured badge */}
                 {project.featured && (
                   <div className='absolute top-4 right-4'>
@@ -196,62 +198,62 @@ export default function ProjectsSection() {
                   </div>
                 )}
               </div>
-              
+
               <div className='p-6'>
                 <div className='flex justify-between items-start mb-3'>
                   <h3 className='text-2xl font-bold'>{project.title}</h3>
                   <div className='flex gap-2'>
-                    <motion.a 
+                    <motion.a
                       href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target='_blank'
+                      rel='noopener noreferrer'
                       className='text-gray-400 hover:text-primary transition-colors'
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      aria-label="Live demo"
+                      aria-label='Live demo'
                     >
                       <FiExternalLink />
                     </motion.a>
-                    <motion.a 
+                    <motion.a
                       href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      target='_blank'
+                      rel='noopener noreferrer'
                       className='text-gray-400 hover:text-primary transition-colors'
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      aria-label="Source code"
+                      aria-label='Source code'
                     >
                       <FiGithub />
                     </motion.a>
                   </div>
                 </div>
-                
+
                 <p className='text-gray-400 mb-4'>{project.description}</p>
-                
+
                 <div className='flex flex-wrap gap-2 mb-4'>
                   {project.technologies.map((tech, i) => (
-                    <motion.span 
-                      key={i} 
+                    <motion.span
+                      key={i}
                       className='text-xs bg-primary/20 text-primary px-2 py-1 rounded-full'
-                      whileHover={{ 
+                      whileHover={{
                         y: -2,
-                        backgroundColor: "rgba(99, 102, 241, 0.3)"
+                        backgroundColor: 'rgba(99, 102, 241, 0.3)',
                       }}
                     >
                       {tech}
                     </motion.span>
                   ))}
                 </div>
-                
+
                 <div className='flex gap-4'>
-                  <motion.button 
+                  <motion.button
                     className='text-sm font-medium text-primary hover:underline flex items-center gap-1'
                     whileHover={{ x: 5 }}
                   >
                     <FiGlobe className='text-xs' />
                     View Project
                   </motion.button>
-                  <motion.button 
+                  <motion.button
                     className='text-sm font-medium text-gray-400 hover:text-white flex items-center gap-1'
                     whileHover={{ x: 5 }}
                   >
@@ -260,7 +262,7 @@ export default function ProjectsSection() {
                   </motion.button>
                 </div>
               </div>
-              
+
               {/* Interactive hover effect */}
               <motion.div
                 className='absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none'

@@ -11,7 +11,7 @@ export default function DarkModeToggle() {
     // Check system preference
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const storedPreference = localStorage.getItem('darkMode');
-    
+
     if (storedPreference !== null) {
       setDarkMode(storedPreference === 'true');
     } else {
@@ -26,7 +26,7 @@ export default function DarkModeToggle() {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    
+
     // Save preference
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
@@ -43,11 +43,7 @@ export default function DarkModeToggle() {
       whileTap={{ scale: 0.9 }}
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {darkMode ? (
-        <FiSun className='text-xl' />
-      ) : (
-        <FiMoon className='text-xl' />
-      )}
+      {darkMode ? <FiSun className='text-xl' /> : <FiMoon className='text-xl' />}
     </motion.button>
   );
 }

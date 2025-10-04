@@ -13,7 +13,7 @@ export default function ScrollIndicator() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollTop / docHeight) * 100;
       setScrollProgress(progress);
-      
+
       // Hide scroll indicator when at top of page
       setIsVisible(scrollTop > 50);
     };
@@ -23,7 +23,7 @@ export default function ScrollIndicator() {
   }, []);
 
   return (
-    <motion.div 
+    <motion.div
       className='fixed top-0 left-0 right-0 h-1 z-50 pointer-events-none'
       initial={{ opacity: 0 }}
       animate={{ opacity: isVisible ? 1 : 0 }}
@@ -33,7 +33,7 @@ export default function ScrollIndicator() {
         className='h-full bg-gradient-to-r from-primary to-secondary'
         style={{ width: `${scrollProgress}%` }}
       />
-      
+
       {/* Scroll to top button appears when scrolled down */}
       {scrollProgress > 10 && (
         <motion.button
@@ -46,8 +46,14 @@ export default function ScrollIndicator() {
           transition={{ duration: 0.3 }}
           aria-label='Scroll to top'
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-6 w-6'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M5 15l7-7 7 7' />
           </svg>
         </motion.button>
       )}

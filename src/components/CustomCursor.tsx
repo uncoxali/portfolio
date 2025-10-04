@@ -20,7 +20,7 @@ export default function CustomCursor() {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
-    
+
     // Exit early if user prefers reduced motion
     if (mediaQuery.matches) {
       return;
@@ -189,7 +189,7 @@ export default function CustomCursor() {
         variants={cursorVariants}
         animate={cursorVariant}
         transition={{ type: 'spring', stiffness: 500, damping: 28 }}
-        aria-hidden="true"
+        aria-hidden='true'
       />
 
       {/* Inner cursor dot */}
@@ -200,7 +200,7 @@ export default function CustomCursor() {
         variants={innerCursorVariants}
         animate={cursorVariant}
         transition={{ type: 'spring', stiffness: 500, damping: 28 }}
-        aria-hidden="true"
+        aria-hidden='true'
       />
 
       {/* Click effect */}
@@ -215,7 +215,7 @@ export default function CustomCursor() {
           initial={{ scale: 0.5, opacity: 1 }}
           animate={{ scale: 2, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          aria-hidden="true"
+          aria-hidden='true'
         />
       )}
 
@@ -231,7 +231,7 @@ export default function CustomCursor() {
             initial={{ scale: 0, x: -10, y: -10 }}
             animate={{ scale: 1, x: -15, y: -15 }}
             transition={{ duration: 0.2 }}
-            aria-hidden="true"
+            aria-hidden='true'
           />
           <motion.div
             className='fixed top-0 left-0 w-2 h-2 bg-secondary rounded-full pointer-events-none z-49'
@@ -242,7 +242,7 @@ export default function CustomCursor() {
             initial={{ scale: 0, x: 10, y: -10 }}
             animate={{ scale: 1, x: 15, y: -15 }}
             transition={{ duration: 0.2, delay: 0.1 }}
-            aria-hidden="true"
+            aria-hidden='true'
           />
         </>
       )}

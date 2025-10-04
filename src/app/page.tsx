@@ -38,7 +38,7 @@ export default function Home() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      aria-label="Main content"
+      aria-label='Main content'
     >
       <Navigation />
       <ScrollIndicator />
@@ -54,15 +54,15 @@ export default function Home() {
         transition={{ duration: 0.8, delay: 0.5 }}
       >
         <AboutSection />
-        
+
         <SkillsSection />
-        
+
         <ExperienceSection />
-        
+
         <ProjectsSection />
-        
+
         <ContactSection />
-        
+
         <Footer />
       </motion.div>
     </motion.main>

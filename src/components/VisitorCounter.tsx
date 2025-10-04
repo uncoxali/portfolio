@@ -25,7 +25,7 @@ export default function VisitorCounter() {
 
     // Update visitor count
     const updateVisitorCount = () => {
-      setVisitorCount(prev => {
+      setVisitorCount((prev) => {
         const newCount = prev + 1;
         localStorage.setItem('visitorCount', newCount.toString());
         return newCount;
@@ -37,7 +37,7 @@ export default function VisitorCounter() {
 
     // Update online users periodically
     const onlineUsersInterval = setInterval(() => {
-      setOnlineUsers(prev => {
+      setOnlineUsers((prev) => {
         const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
         return Math.max(1, prev + change);
       });

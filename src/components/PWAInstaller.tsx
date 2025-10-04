@@ -32,7 +32,7 @@ export default function PWAInstaller() {
 
     // Show the install prompt
     deferredPrompt.prompt();
-    
+
     // Wait for the user to respond to the prompt
     deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
@@ -69,7 +69,7 @@ export default function PWAInstaller() {
               </p>
             </div>
           </div>
-          
+
           <div className='flex gap-3'>
             <button
               onClick={closeBanner}
@@ -85,7 +85,7 @@ export default function PWAInstaller() {
               Install
             </button>
           </div>
-          
+
           <button
             onClick={closeBanner}
             className='absolute top-2 right-2 text-gray-400 hover:text-white transition-colors'

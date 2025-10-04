@@ -40,13 +40,12 @@ export default function SkillsSection() {
     return acc;
   }, {} as Record<string, typeof skills>);
 
-  const filteredSkills = activeCategory === 'all' 
-    ? skills 
-    : skills.filter(skill => skill.category === activeCategory);
+  const filteredSkills =
+    activeCategory === 'all' ? skills : skills.filter((skill) => skill.category === activeCategory);
 
   // Get category icon
   const getCategoryIcon = (category: string) => {
-    const cat = categories.find(c => c.id === category);
+    const cat = categories.find((c) => c.id === category);
     return cat ? cat.icon : FiStar;
   };
 
@@ -121,7 +120,7 @@ export default function SkillsSection() {
               >
                 {/* Animated background on hover */}
                 <div className='absolute inset-0 bg-gradient-to-r from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
-                
+
                 <div className='relative z-10'>
                   <div className='flex justify-between items-start mb-4'>
                     <div className='flex items-center gap-3'>
@@ -167,7 +166,7 @@ export default function SkillsSection() {
                     <span>Beginner</span>
                     <span>Expert</span>
                   </div>
-                  
+
                   {/* Category badge */}
                   <div className='mt-3'>
                     <span className='text-xs bg-gray-700/50 text-gray-400 px-2 py-1 rounded-full flex items-center gap-1'>
@@ -190,9 +189,23 @@ export default function SkillsSection() {
           className='mt-16 grid grid-cols-2 md:grid-cols-4 gap-4'
         >
           {[
-            { label: 'Frontend Skills', value: skills.filter(s => s.category === 'Frontend').length, icon: FiCode },
-            { label: 'Languages', value: skills.filter(s => s.category === 'Language').length, icon: FiCode },
-            { label: 'Average Proficiency', value: `${Math.round(skills.reduce((acc, skill) => acc + skill.level, 0) / skills.length)}%`, icon: FiBarChart2 },
+            {
+              label: 'Frontend Skills',
+              value: skills.filter((s) => s.category === 'Frontend').length,
+              icon: FiCode,
+            },
+            {
+              label: 'Languages',
+              value: skills.filter((s) => s.category === 'Language').length,
+              icon: FiCode,
+            },
+            {
+              label: 'Average Proficiency',
+              value: `${Math.round(
+                skills.reduce((acc, skill) => acc + skill.level, 0) / skills.length,
+              )}%`,
+              icon: FiBarChart2,
+            },
             { label: 'Years Experience', value: '6+', icon: FiStar },
           ].map((stat, index) => {
             const Icon = stat.icon;

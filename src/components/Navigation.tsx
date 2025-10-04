@@ -46,7 +46,7 @@ export default function Navigation() {
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
-          
+
           // Check if we're in this section
           if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             return sections[i];
@@ -96,7 +96,7 @@ export default function Navigation() {
       // For other links, use Next.js router
       window.location.href = href;
     }
-    
+
     // Close mobile menu if open
     setIsOpen(false);
   };

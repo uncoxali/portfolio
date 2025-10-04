@@ -15,7 +15,7 @@ export default function CookieConsent() {
       const timer = setTimeout(() => {
         setShowConsent(true);
       }, 2000);
-      
+
       return () => clearTimeout(timer);
     }
   }, []);
@@ -43,19 +43,30 @@ export default function CookieConsent() {
         <div className='flex flex-col md:flex-row items-center justify-between gap-4'>
           <div className='flex items-start gap-3'>
             <div className='text-primary text-xl mt-1 flex-shrink-0'>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-6 w-6'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7'
+                />
               </svg>
             </div>
             <div>
               <h3 className='font-semibold text-lg mb-1'>Cookie Consent</h3>
               <p className='text-gray-400 text-sm'>
-                This website uses cookies to enhance your browsing experience and analyze site traffic. 
-                By clicking "Accept", you consent to our use of cookies.
+                This website uses cookies to enhance your browsing experience and analyze site
+                traffic. By clicking "Accept", you consent to our use of cookies.
               </p>
             </div>
           </div>
-          
+
           <div className='flex gap-3'>
             <button
               onClick={rejectCookies}
@@ -70,7 +81,7 @@ export default function CookieConsent() {
               Accept
             </button>
           </div>
-          
+
           <button
             onClick={() => setShowConsent(false)}
             className='absolute top-2 right-2 text-gray-400 hover:text-white transition-colors'

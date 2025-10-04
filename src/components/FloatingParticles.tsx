@@ -16,7 +16,7 @@ export default function FloatingParticles() {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
-    
+
     // Exit early if user prefers reduced motion
     if (mediaQuery.matches) {
       return;
@@ -32,9 +32,12 @@ export default function FloatingParticles() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
+
       // Adjust particle count based on screen size
-      const newParticleCount = Math.min(150, Math.max(50, Math.floor((window.innerWidth * window.innerHeight) / 8000)));
+      const newParticleCount = Math.min(
+        150,
+        Math.max(50, Math.floor((window.innerWidth * window.innerHeight) / 8000)),
+      );
       setParticleCount(newParticleCount);
     };
 
@@ -80,7 +83,7 @@ export default function FloatingParticles() {
         this.x += this.speedX;
         this.y += this.speedY;
         this.angle += this.va;
-        
+
         // Oscillation effect
         this.x += Math.sin(this.angle) * 0.3; // Reduced oscillation
         this.y += Math.cos(this.angle) * 0.3;
@@ -93,8 +96,9 @@ export default function FloatingParticles() {
         const dx = this.x - mousePosition.x;
         const dy = this.y - mousePosition.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 80) { // Reduced interaction radius
+
+        if (distance < 80) {
+          // Reduced interaction radius
           const force = (80 - distance) / 80;
           this.x += dx * force * 0.02; // Reduced force
           this.y += dy * force * 0.02;
@@ -109,7 +113,7 @@ export default function FloatingParticles() {
         ctx.fillStyle = this.color;
         ctx.globalAlpha = this.opacity;
         ctx.beginPath();
-        
+
         // Draw different shapes
         if (this.originalSize > 2.5) {
           // Circle
@@ -123,7 +127,7 @@ export default function FloatingParticles() {
           ctx.lineTo(this.x - this.size, this.y + this.size);
           ctx.lineTo(this.x + this.size, this.y + this.size);
         }
-        
+
         ctx.fill();
         ctx.globalAlpha = 1;
       }
@@ -139,15 +143,16 @@ export default function FloatingParticles() {
     // Connect nearby particles
     const connectParticles = () => {
       if (!ctx) return;
-      
+
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 80) { // Reduced connection distance for performance
-            const opacity = (80 - distance) / 80 * 0.1; // Reduced opacity
+          if (distance < 80) {
+            // Reduced connection distance for performance
+            const opacity = ((80 - distance) / 80) * 0.1; // Reduced opacity
             ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
             ctx.lineWidth = 0.3; // Thinner lines
             ctx.beginPath();
@@ -161,10 +166,10 @@ export default function FloatingParticles() {
 
     // Animation loop
     let animationFrameId: number;
-    
+
     const animate = () => {
       if (!ctx || !canvas || !isActive) return;
-      
+
       // Clear with a semi-transparent fill for trail effect
       ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -205,14 +210,10 @@ export default function FloatingParticles() {
       <canvas
         ref={canvasRef}
         className='absolute top-0 left-0 w-full h-full pointer-events-none z-0'
-        aria-hidden="true"
+        aria-hidden='true'
       />
       {/* Hidden toggle button for debugging */}
-      <button 
-        onClick={toggleActivity}
-        className='hidden'
-        aria-label="Toggle particles"
-      />
+      <button onClick={toggleActivity} className='hidden' aria-label='Toggle particles' />
     </>
   );
 }
