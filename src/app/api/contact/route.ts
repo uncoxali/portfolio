@@ -57,7 +57,11 @@ export async function POST(request: Request) {
 
         // Provide more specific error messages
         let errorMessage = 'Failed to send message. Please try again later.';
-        if (error.message) {
+
+        // Handle missing environment variables specifically
+        if (error.message && error.message.includes('Missing required environment variables')) {
+            errorMessage = 'Contact form is currently unavailable. Please try again later or contact directly via email.';
+        } else if (error.message) {
             errorMessage = error.message;
         }
 

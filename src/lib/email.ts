@@ -1,36 +1,47 @@
 import nodemailer from 'nodemailer';
 
 // Validate required environment variables
-const requiredEnvVars = ['EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
-const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+function validateEnvVars() {
+    const requiredEnvVars = ['EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
+    const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
-if (missingEnvVars.length > 0) {
-    console.error('Missing environment variables:', missingEnvVars);
-    throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+    if (missingEnvVars.length > 0) {
+        console.error('Missing environment variables:', missingEnvVars);
+        throw new Error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+    }
 }
 
 // Create a transporter object using SMTP transport
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587'),
-    secure: false, // true for 465, false for other ports
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-    // Add debugging options
-    logger: true,
-    debug: process.env.NODE_ENV === 'development',
-});
+let transporter: nodemailer.Transporter | null = null;
 
-// Verify transporter configuration
-transporter.verify((error: Error | null, success: boolean) => {
-    if (error) {
-        console.error('Email transporter configuration error:', error);
-    } else {
-        console.log('Email transporter is ready to send messages');
+function getTransporter() {
+    if (!transporter) {
+        validateEnvVars(); // Only validate when transporter is actually needed
+
+        transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'smtp.gmail.com',
+            port: parseInt(process.env.SMTP_PORT || '587'),
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+            // Add debugging options
+            logger: true,
+            debug: process.env.NODE_ENV === 'development',
+        });
+
+        // Verify transporter configuration
+        transporter.verify((error: Error | null, success: boolean) => {
+            if (error) {
+                console.error('Email transporter configuration error:', error);
+            } else {
+                console.log('Email transporter is ready to send messages');
+            }
+        });
     }
-});
+    return transporter;
+}
 
 export interface EmailData {
     name: string;
@@ -40,11 +51,6 @@ export interface EmailData {
 
 export async function sendContactEmail(data: EmailData) {
     const { name, email, message } = data;
-
-    // Validate environment variables
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_TO) {
-        throw new Error('Email configuration is missing. Please check environment variables.');
-    }
 
     // Log the email data for debugging (without sensitive information)
     console.log('Preparing to send email from contact form:', {
@@ -83,6 +89,7 @@ export async function sendContactEmail(data: EmailData) {
 
     try {
         console.log('Attempting to send email...');
+        const transporter = getTransporter(); // Get transporter with validation
         const info = await transporter.sendMail(mailOptions);
         console.log('Email sent successfully:', info.messageId);
         return { success: true, messageId: info.messageId };

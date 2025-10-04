@@ -31,6 +31,11 @@ async function testEmail() {
         if (error.response) {
             console.error('Error response:', error.response);
         }
+
+        // Handle missing environment variables specifically
+        if (error.message && error.message.includes('Missing required environment variables')) {
+            console.error('Please check your .env.local file for the required email configuration.');
+        }
     }
 }
 
