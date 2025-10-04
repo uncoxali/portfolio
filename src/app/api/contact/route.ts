@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
+import { sendContactEmail, EmailData } from '@/lib/email';
 
 export async function POST(request: Request) {
     try {
-        const { name, email, message } = await request.json();
+        const { name, email, message }: EmailData = await request.json();
+        console.log('Received contact form submission:', { name, email, message: message.substring(0, 50) + '...' });
 
         // Validate input
         if (!name || !email || !message) {
+            console.log('Validation failed: missing fields');
             return NextResponse.json(
                 { error: 'All fields are required' },
                 { status: 400 }
@@ -15,50 +18,27 @@ export async function POST(request: Request) {
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
+            console.log('Validation failed: invalid email format');
             return NextResponse.json(
                 { error: 'Invalid email format' },
                 { status: 400 }
             );
         }
 
-        // In a real implementation, you would send the email here using a service like:
-        // - Nodemailer with SMTP
-        // - SendGrid API
-        // - Resend API
-        // - AWS SES
-        // - etc.
-
-        // For now, we'll simulate a successful response
-        // In production, you would integrate with an email service here
-
-        // Example using a service like Resend:
-        /*
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        
-        const { data, error } = await resend.emails.send({
-          from: 'onboarding@resend.dev',
-          to: 'alif.mohamady20@gmail.com',
-          subject: `Contact from Portfolio - ${name}`,
-          html: `
-            <h2>New Contact Form Submission</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Message:</strong></p>
-            <p>${message}</p>
-            <hr>
-            <p><em>Sent from portfolio website</em></p>
-          `
-        });
-        
-        if (error) {
-          return NextResponse.json({ error: error.message }, { status: 500 });
+        // Check if message is not too short
+        if (message.trim().length < 10) {
+            console.log('Validation failed: message too short');
+            return NextResponse.json(
+                { error: 'Message must be at least 10 characters long' },
+                { status: 400 }
+            );
         }
-        */
 
-        // Simulate successful email sending with a delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        console.log(`Email sent from ${name} (${email}): ${message}`);
+        console.log('Sending email...');
+        // Send email
+        const result = await sendContactEmail({ name, email, message });
+        
+        console.log('Email sent successfully:', result);
 
         return NextResponse.json(
             {
@@ -66,16 +46,23 @@ export async function POST(request: Request) {
                 details: {
                     name,
                     email,
-                    message,
+                    message: message.substring(0, 50) + '...',
                     timestamp: new Date().toISOString()
                 }
             },
             { status: 200 }
         );
-    } catch (error) {
-        console.error('Error sending message:', error);
+    } catch (error: any) {
+        console.error('Error in contact form API:', error);
+        
+        // Provide more specific error messages
+        let errorMessage = 'Failed to send message. Please try again later.';
+        if (error.message) {
+            errorMessage = error.message;
+        }
+        
         return NextResponse.json(
-            { error: 'Failed to send message. Please try again later.' },
+            { error: errorMessage },
             { status: 500 }
         );
     }

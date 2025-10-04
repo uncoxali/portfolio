@@ -4,6 +4,17 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {
+  FiX,
+  FiMenu,
+  FiHome,
+  FiUser,
+  FiCode,
+  FiBriefcase,
+  FiFolder,
+  FiMail,
+  FiPhone,
+} from 'react-icons/fi';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,14 +22,15 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState('home');
   const pathname = usePathname();
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/#about' },
-    { name: 'Skills', href: '/#skills' },
-    { name: 'Experience', href: '/#experience' },
-    { name: 'Projects', href: '/#projects' },
-    { name: 'Contact', href: '/#contact' },
+    { name: 'Home', href: '/', icon: FiHome },
+    { name: 'About', href: '/#about', icon: FiUser },
+    { name: 'Skills', href: '/#skills', icon: FiCode },
+    { name: 'Experience', href: '/#experience', icon: FiBriefcase },
+    { name: 'Projects', href: '/#projects', icon: FiFolder },
+    { name: 'Contact', href: '/#contact', icon: FiMail },
   ];
 
   useEffect(() => {
@@ -33,6 +45,23 @@ export default function Navigation() {
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   // Improved scrollspy functionality
   useEffect(() => {
@@ -150,10 +179,11 @@ export default function Navigation() {
                   <a
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className={`font-medium transition-colors duration-300 cursor-pointer relative py-2 ${
+                    className={`font-medium transition-colors duration-300 cursor-pointer relative py-2 flex items-center gap-2 ${
                       isActive ? 'text-primary' : 'text-gray-400 hover:text-white'
                     }`}
                   >
+                    <item.icon className='text-lg' />
                     {item.name}
                     {isActive && (
                       <motion.div
@@ -175,17 +205,18 @@ export default function Navigation() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className='glass px-6 py-2 rounded-full font-medium hover:bg-primary/20 transition-all duration-300'
+            className='glass px-6 py-2 rounded-full font-medium hover:bg-primary/20 transition-all duration-300 flex items-center gap-2'
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
+            <FiPhone className='text-lg' />
             Hire Me
           </motion.button>
         </div>
       </motion.nav>
 
       {/* Mobile Navigation */}
-      <nav className='md:hidden fixed top-0 left-0 right-0 z-40 bg-dark-bg/80 backdrop-blur-md py-4'>
+      <nav className='md:hidden fixed top-0 left-0 right-0 z-50 bg-dark-bg/90 backdrop-blur-md py-4 border-b border-gray-800'>
         <div className='container mx-auto px-4 flex justify-between items-center'>
           <div className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary'>
             Ali M.
@@ -193,28 +224,19 @@ export default function Navigation() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className='glass w-10 h-10 rounded-full flex flex-col items-center justify-center gap-1'
+            className='glass w-10 h-10 rounded-full flex items-center justify-center'
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
           >
-            <span
-              className={`block w-5 h-0.5 bg-white transition-transform duration-300 ${
-                isOpen ? 'rotate-45 translate-y-1.5' : ''
-              }`}
-            ></span>
-            <span
-              className={`block w-5 h-0.5 bg-white transition-opacity duration-300 ${
-                isOpen ? 'opacity-0' : 'opacity-100'
-              }`}
-            ></span>
-            <span
-              className={`block w-5 h-0.5 bg-white transition-transform duration-300 ${
-                isOpen ? '-rotate-45 -translate-y-1.5' : ''
-              }`}
-            ></span>
+            {isOpen ? (
+              <FiX className='text-white text-2xl' />
+            ) : (
+              <FiMenu className='text-white text-2xl' />
+            )}
           </button>
         </div>
 
-        {/* Sidebar overlay */}
+        {/* Mobile menu overlay and panel */}
         <AnimatePresence>
           {isOpen && (
             <>
@@ -223,15 +245,16 @@ export default function Navigation() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className='fixed inset-0 bg-black/70 z-40 md:hidden'
+                className='fixed inset-0 bg-black/80 z-40 md:hidden'
                 onClick={() => setIsOpen(false)}
               />
               <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
+                ref={menuRef}
+                initial={{ x: '100%', opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: '100%', opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
-                className='fixed top-0 right-0 h-full w-4/5 max-w-md bg-dark-card z-50 shadow-2xl overflow-hidden border-l border-primary/30'
+                className='fixed top-0 right-0 h-full w-4/5 max-w-sm bg-dark-card z-50 shadow-2xl overflow-hidden border-l border-primary/30'
               >
                 {/* Background pattern */}
                 <div className='absolute inset-0 bg-gradient-to-br from-dark-bg via-dark-bg/95 to-primary/10'></div>
@@ -241,7 +264,7 @@ export default function Navigation() {
                 <div className='relative z-10 h-full flex flex-col'>
                   <div className='p-6 border-b border-gray-800'>
                     <div className='flex justify-between items-center'>
-                      <div className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary'>
+                      <div className='text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary'>
                         Ali Mohammadi
                       </div>
                       <button
@@ -249,12 +272,12 @@ export default function Navigation() {
                         className='glass w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300'
                         aria-label='Close menu'
                       >
-                        <span className='text-2xl text-gray-300'>&times;</span>
+                        <FiX className='text-xl text-gray-300' />
                       </button>
                     </div>
                   </div>
 
-                  <div className='flex-1 flex flex-col py-6 px-6'>
+                  <div className='flex-1 flex flex-col py-6 px-6 overflow-y-auto'>
                     <nav className='flex-1'>
                       <ul className='space-y-2'>
                         {navItems.map((item) => {
@@ -277,20 +300,20 @@ export default function Navigation() {
                                 href={item.href}
                                 onClick={(e) => {
                                   handleNavClick(e, item.href);
-                                  setIsOpen(false);
                                 }}
-                                className={`block py-4 px-4 rounded-xl font-medium text-lg transition-all duration-300 flex items-center justify-between ${
+                                className={`block py-4 px-4 rounded-xl font-medium text-lg transition-all duration-300 flex items-center gap-3 ${
                                   isActive
                                     ? 'bg-primary/20 text-primary shadow-lg'
                                     : 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
                                 }`}
                               >
-                                <span>{item.name}</span>
+                                <item.icon className='text-xl flex-shrink-0' />
+                                <span className='truncate'>{item.name}</span>
                                 {isActive && (
                                   <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className='w-2 h-2 rounded-full bg-primary'
+                                    className='ml-auto w-3 h-3 rounded-full bg-primary flex-shrink-0'
                                   />
                                 )}
                               </a>
@@ -302,10 +325,19 @@ export default function Navigation() {
 
                     <div className='mt-auto pt-6 border-t border-gray-800'>
                       <motion.button
-                        className='w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium text-white hover:from-primary/80 hover:to-secondary/80 transition-all duration-300 shadow-lg shadow-primary/20'
+                        onClick={() => {
+                          // Scroll to contact section
+                          const contactSection = document.getElementById('contact');
+                          if (contactSection) {
+                            contactSection.scrollIntoView({ behavior: 'smooth' });
+                            setIsOpen(false);
+                          }
+                        }}
+                        className='w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium text-white hover:from-primary/80 hover:to-secondary/80 transition-all duration-300 shadow-lg shadow-primary/20 flex items-center justify-center gap-2'
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
+                        <FiPhone className='text-lg' />
                         Hire Me
                       </motion.button>
                     </div>

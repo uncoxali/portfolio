@@ -23,6 +23,7 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 - **Enhanced form validation and feedback**
 - **Chaos Toolbar** with interactive tools (inspired by Josh W. Comeau)
 - **Whimsical animations** throughout the site
+- **Working contact form** with email notifications
 
 ## Tech Stack
 
@@ -32,6 +33,7 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 - **Framer Motion** for advanced animations
 - **React Three Fiber** for 3D elements
 - **Lenis** for smooth scrolling
+- **Nodemailer** for email functionality
 
 ## Enhanced Sections
 
@@ -51,13 +53,27 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
    npm install
    ```
 
-2. Run the development server:
+2. Set up email configuration:
+
+   Create a `.env.local` file in the root directory with your email settings:
+
+   ```env
+   EMAIL_USER=your-email@gmail.com
+   EMAIL_PASS=your-app-password
+   EMAIL_TO=alif.mohamady20@gmail.com
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   ```
+
+   For detailed email setup instructions, see [EMAIL_SETUP.md](file:///Users/alimohamadi/Desktop/portfolio/EMAIL_SETUP.md).
+
+3. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-3. Open [http://localhost:3001](http://localhost:3001) in your browser
+4. Open [http://localhost:3001](http://localhost:3001) in your browser
 
 ## Deployment
 
