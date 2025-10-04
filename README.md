@@ -23,7 +23,6 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 - **Enhanced form validation and feedback**
 - **Chaos Toolbar** with interactive tools (inspired by Josh W. Comeau)
 - **Whimsical animations** throughout the site
-- **Working contact form** with email notifications
 
 ## Tech Stack
 
@@ -33,7 +32,6 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 - **Framer Motion** for advanced animations
 - **React Three Fiber** for 3D elements
 - **Lenis** for smooth scrolling
-- **Nodemailer** for email functionality
 
 ## Enhanced Sections
 
@@ -42,7 +40,7 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 3. **Skills** - Categorized skill cards with hover effects and proficiency levels, category filtering
 4. **Experience** - Timeline with expandable details and key achievements, company logos
 5. **Projects** - Grid layout with enhanced hover effects, project links, technology tags, category filtering
-6. **Contact** - Animated contact form with validation, social media links with hover effects
+6. **Contact** - Direct contact information with social media links and hover effects
 7. **Chaos Toolbar** - Interactive toolbar with grabber, eraser, bomb, and wand tools (inspired by Josh W. Comeau)
 
 ## Getting Started
@@ -53,27 +51,13 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
    npm install
    ```
 
-2. Set up email configuration:
-
-   Create a `.env.local` file in the root directory with your email settings:
-
-   ```env
-   EMAIL_USER=your-email@gmail.com
-   EMAIL_PASS=your-app-password
-   EMAIL_TO=alif.mohamady20@gmail.com
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   ```
-
-   For detailed email setup instructions, see [EMAIL_SETUP.md](file:///Users/alimohamadi/Desktop/portfolio/EMAIL_SETUP.md).
-
-3. Run the development server:
+2. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-4. Open [http://localhost:3001](http://localhost:3001) in your browser
+3. Open [http://localhost:3001](http://localhost:3001) in your browser
 
 ## Deployment
 
