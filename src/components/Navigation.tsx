@@ -34,7 +34,7 @@ export default function Navigation() {
     setIsOpen(false);
   }, [pathname]);
 
-  // Scrollspy functionality
+  // Improved scrollspy functionality
   useEffect(() => {
     // Function to determine active section
     const getCurrentSection = () => {
@@ -45,7 +45,10 @@ export default function Navigation() {
         const element = document.getElementById(sections[i]);
         if (element) {
           const offsetTop = element.offsetTop;
-          if (scrollPosition >= offsetTop) {
+          const offsetHeight = element.offsetHeight;
+          
+          // Check if we're in this section
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             return sections[i];
           }
         }
@@ -93,6 +96,9 @@ export default function Navigation() {
       // For other links, use Next.js router
       window.location.href = href;
     }
+    
+    // Close mobile menu if open
+    setIsOpen(false);
   };
 
   // Determine if we're on the home page

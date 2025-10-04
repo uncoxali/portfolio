@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiHeart, FiCoffee, FiCode, FiGlobe } from 'react-icons/fi';
+import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiHeart, FiCoffee, FiCode, FiGlobe, FiMapPin, FiPhone } from 'react-icons/fi';
 
 export default function Footer() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -28,13 +28,13 @@ export default function Footer() {
     },
     { 
       Icon: FiGithub, 
-      href: 'https://github.com/yourusername', 
+      href: 'https://github.com/alimohamadi', 
       label: 'GitHub',
       color: 'hover:text-gray-300'
     },
     { 
       Icon: FiTwitter, 
-      href: 'https://twitter.com/yourtwitter', 
+      href: 'https://twitter.com/alimohamadi', 
       label: 'Twitter',
       color: 'hover:text-blue-400'
     },
@@ -44,6 +44,15 @@ export default function Footer() {
       label: 'Email',
       color: 'hover:text-red-500'
     },
+  ];
+
+  const quickLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -91,13 +100,7 @@ export default function Footer() {
           >
             <h3 className='text-lg font-semibold mb-4'>Quick Links</h3>
             <ul className='space-y-2'>
-              {[
-                { name: 'About', href: '#about' },
-                { name: 'Skills', href: '#skills' },
-                { name: 'Experience', href: '#experience' },
-                { name: 'Projects', href: '#projects' },
-                { name: 'Contact', href: '#contact' },
-              ].map((link, index) => (
+              {quickLinks.map((link, index) => (
                 <motion.li
                   key={index}
                   whileHover={{ x: 5 }}
@@ -129,7 +132,11 @@ export default function Footer() {
                 <span>alif.mohamady20@gmail.com</span>
               </div>
               <div className='flex items-center gap-2 text-gray-400'>
-                <FiGlobe className='text-primary' />
+                <FiPhone className='text-primary' />
+                <span>+98 910 486 6595</span>
+              </div>
+              <div className='flex items-center gap-2 text-gray-400'>
+                <FiMapPin className='text-primary' />
                 <span>Tehran, Iran</span>
               </div>
               <div className='flex items-center gap-2 text-gray-400'>

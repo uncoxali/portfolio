@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { FiDownload, FiLinkedin, FiGithub, FiTwitter, FiMail, FiCoffee } from 'react-icons/fi';
+import { FiDownload, FiLinkedin, FiGithub, FiTwitter, FiMail, FiCoffee, FiChevronDown } from 'react-icons/fi';
 import MagneticButton from '@/components/MagneticButton';
 
 export default function HeroSection() {
   const [isMounted, setIsMounted] = useState(false);
   const controls = useAnimation();
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -16,6 +17,13 @@ export default function HeroSection() {
       y: 0,
       transition: { duration: 0.8, ease: "easeOut" }
     });
+
+    // Show scroll indicator after a delay
+    const timer = setTimeout(() => {
+      setShowScrollIndicator(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [controls]);
 
   const containerVariants = {
@@ -34,6 +42,14 @@ export default function HeroSection() {
       opacity: 1,
       y: 0,
       transition: { duration: 0.5 }
+    }
+  };
+
+  // Function to scroll to about section
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -117,7 +133,7 @@ export default function HeroSection() {
           >
             Crafting exceptional digital experiences with modern web technologies
             <br />
-            <span className='text-primary'>Based in Iran</span> • Available for remote opportunities
+            <span className='text-primary'>Based in Tehran, Iran</span> • Available for remote opportunities
             worldwide
           </motion.p>
 
@@ -154,8 +170,8 @@ export default function HeroSection() {
           >
             {[
               { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/ali-mohammadi20', label: 'LinkedIn' },
-              { Icon: FiGithub, href: 'https://github.com/yourusername', label: 'GitHub' },
-              { Icon: FiTwitter, href: 'https://twitter.com/yourtwitter', label: 'Twitter' },
+              { Icon: FiGithub, href: 'https://github.com/alimohamadi', label: 'GitHub' },
+              { Icon: FiTwitter, href: 'https://twitter.com/alimohamadi', label: 'Twitter' },
               { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email' }
             ].map(({ Icon, href, label }, index) => (
               <MagneticButton
@@ -177,6 +193,27 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Enhanced scroll indicator */}
+      {showScrollIndicator && (
+        <motion.div
+          className='absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer'
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          onClick={scrollToAbout}
+        >
+          <div className='flex flex-col items-center gap-2 text-gray-400 hover:text-primary transition-colors'>
+            <span className='text-sm'>Scroll to explore</span>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <FiChevronDown className='text-2xl' />
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
     </section>
   );
 }

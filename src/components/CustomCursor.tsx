@@ -13,7 +13,19 @@ export default function CustomCursor() {
   const positionRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number>(0);
 
+  // Check if user prefers reduced motion
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    // Exit early if user prefers reduced motion
+    if (mediaQuery.matches) {
+      return;
+    }
+
     // Show cursor
     setIsVisible(true);
 
@@ -74,7 +86,7 @@ export default function CustomCursor() {
       const target = e.target as HTMLElement;
 
       // Check for different types of interactive elements
-      if (target.closest('button, a, .cursor-hover, input, textarea')) {
+      if (target.closest('button, a, .cursor-hover, input, textarea, select')) {
         setIsHovering(true);
         setCursorVariant('hover');
       } else if (target.closest('.cursor-drag')) {
@@ -108,7 +120,12 @@ export default function CustomCursor() {
       document.removeEventListener('mouseout', handleMouseOut);
       cancelAnimationFrame(animationFrameRef.current);
     };
-  }, []);
+  }, [prefersReducedMotion]);
+
+  // Exit early if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   // Cursor variants
   const cursorVariants = {
@@ -172,6 +189,7 @@ export default function CustomCursor() {
         variants={cursorVariants}
         animate={cursorVariant}
         transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+        aria-hidden="true"
       />
 
       {/* Inner cursor dot */}
@@ -182,6 +200,7 @@ export default function CustomCursor() {
         variants={innerCursorVariants}
         animate={cursorVariant}
         transition={{ type: 'spring', stiffness: 500, damping: 28 }}
+        aria-hidden="true"
       />
 
       {/* Click effect */}
@@ -196,6 +215,7 @@ export default function CustomCursor() {
           initial={{ scale: 0.5, opacity: 1 }}
           animate={{ scale: 2, opacity: 0 }}
           transition={{ duration: 0.3 }}
+          aria-hidden="true"
         />
       )}
 
@@ -211,6 +231,7 @@ export default function CustomCursor() {
             initial={{ scale: 0, x: -10, y: -10 }}
             animate={{ scale: 1, x: -15, y: -15 }}
             transition={{ duration: 0.2 }}
+            aria-hidden="true"
           />
           <motion.div
             className='fixed top-0 left-0 w-2 h-2 bg-secondary rounded-full pointer-events-none z-49'
@@ -221,6 +242,7 @@ export default function CustomCursor() {
             initial={{ scale: 0, x: 10, y: -10 }}
             animate={{ scale: 1, x: 15, y: -15 }}
             transition={{ duration: 0.2, delay: 0.1 }}
+            aria-hidden="true"
           />
         </>
       )}

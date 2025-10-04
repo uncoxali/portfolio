@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiExternalLink, FiGithub, FiStar, FiCode, FiGlobe } from 'react-icons/fi';
+import { FiExternalLink, FiGithub, FiStar, FiCode, FiGlobe, FiFolder } from 'react-icons/fi';
 
 export default function ProjectsSection() {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
@@ -13,8 +13,8 @@ export default function ProjectsSection() {
       id: 1,
       title: 'Healthcare Dashboard Platform',
       description:
-        'Developed front-end using Next.js, MUI, TypeScript, and Orval with responsive design. Collaborated with UX/UI designers and mentored developers.',
-      technologies: ['Next.js', 'MUI', 'TypeScript', 'Orval', 'React'],
+        'A comprehensive healthcare analytics dashboard for medical professionals to track patient data, treatment outcomes, and hospital performance metrics. Built with Next.js, Material-UI, and TypeScript.',
+      technologies: ['Next.js', 'Material-UI', 'TypeScript', 'GraphQL', 'Recharts'],
       liveUrl: '#',
       githubUrl: '#',
       category: 'web',
@@ -22,10 +22,10 @@ export default function ProjectsSection() {
     },
     {
       id: 2,
-      title: 'Shopify E-commerce Store',
+      title: 'E-commerce Shopify Store',
       description:
-        'Customized and maintained Shopify store with custom themes and apps. Optimized performance and SEO, increasing traffic and conversions.',
-      technologies: ['Shopify', 'TypeScript', 'Tailwind CSS', 'React'],
+        'Custom Shopify storefront for a premium fashion brand with advanced product filtering, personalized recommendations, and integrated payment processing. Focused on performance optimization and conversion rate improvement.',
+      technologies: ['Shopify', 'Liquid', 'JavaScript', 'CSS', 'Algolia'],
       liveUrl: '#',
       githubUrl: '#',
       category: 'ecommerce',
@@ -33,10 +33,10 @@ export default function ProjectsSection() {
     },
     {
       id: 3,
-      title: 'Enterprise Web Platform',
+      title: 'Enterprise Resource Planning System',
       description:
-        'Built reusable React components and optimized website performance with Next.js. Implemented responsive design and mentored junior developers.',
-      technologies: ['React', 'Next.js', 'JavaScript', 'CSS'],
+        'A comprehensive ERP solution for manufacturing companies to manage inventory, production schedules, and supply chain operations. Features real-time analytics and reporting capabilities.',
+      technologies: ['React', 'Redux', 'Node.js', 'PostgreSQL', 'D3.js'],
       liveUrl: '#',
       githubUrl: '#',
       category: 'web',
@@ -44,13 +44,35 @@ export default function ProjectsSection() {
     },
     {
       id: 4,
-      title: 'API Integration Platform',
+      title: 'Fitness Tracking Mobile App',
       description:
-        'Contributed to API development and maintenance with seamless front-end integration. Implemented modern web design techniques for responsive layouts.',
-      technologies: ['React', 'CSS', 'JavaScript', 'HTML'],
+        'Cross-platform mobile application for fitness enthusiasts to track workouts, nutrition, and progress. Integrated with wearable devices and social features for community engagement.',
+      technologies: ['React Native', 'Firebase', 'Redux', 'Chart.js'],
       liveUrl: '#',
       githubUrl: '#',
-      category: 'api',
+      category: 'mobile',
+      featured: false,
+    },
+    {
+      id: 5,
+      title: 'Real Estate Listing Platform',
+      description:
+        'A modern real estate platform with advanced search capabilities, virtual tours, and mortgage calculators. Optimized for SEO and mobile responsiveness.',
+      technologies: ['Next.js', 'Tailwind CSS', 'MongoDB', 'Mapbox'],
+      liveUrl: '#',
+      githubUrl: '#',
+      category: 'web',
+      featured: true,
+    },
+    {
+      id: 6,
+      title: 'Financial Data Visualization Tool',
+      description:
+        'Interactive financial dashboard for investment firms to visualize market trends, portfolio performance, and risk analysis. Features complex data visualizations and real-time updates.',
+      technologies: ['React', 'D3.js', 'WebSocket', 'Python', 'FastAPI'],
+      liveUrl: '#',
+      githubUrl: '#',
+      category: 'web',
       featured: false,
     },
   ];
@@ -59,7 +81,7 @@ export default function ProjectsSection() {
     { id: 'all', label: 'All Projects' },
     { id: 'web', label: 'Web Apps' },
     { id: 'ecommerce', label: 'E-commerce' },
-    { id: 'api', label: 'APIs' },
+    { id: 'mobile', label: 'Mobile Apps' },
   ];
 
   const filteredProjects = activeFilter === 'all' 
@@ -103,18 +125,19 @@ export default function ProjectsSection() {
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveFilter(category.id)}
-              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                 activeFilter === category.id
                   ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/30'
                   : 'glass text-gray-300 hover:text-white hover:bg-primary/10'
               }`}
             >
+              <FiFolder className='text-sm' />
               {category.label}
             </motion.button>
           ))}
         </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -247,6 +270,24 @@ export default function ProjectsSection() {
             </motion.div>
           ))}
         </div>
+
+        {/* View all projects button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className='text-center mt-12'
+        >
+          <motion.button
+            className='glass px-8 py-3 rounded-full font-medium hover:bg-primary/20 transition-all duration-300 flex items-center gap-2 mx-auto'
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FiFolder />
+            View All Projects
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );

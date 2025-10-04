@@ -2,10 +2,16 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiCheck, FiX, FiSend, FiMapPin, FiPhone } from 'react-icons/fi';
+import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiCheck, FiX, FiSend, FiMapPin, FiPhone, FiUser, FiMessageSquare } from 'react-icons/fi';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [errors, setErrors] = useState({
     name: '',
     email: '',
     message: '',
@@ -38,27 +44,59 @@ export default function ContactSection() {
       ...prev,
       [id]: value,
     }));
+
+    // Clear error when user starts typing
+    if (errors[id as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [id]: '',
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: '', email: '', message: '' };
+
+    // Name validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+      isValid = false;
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+      isValid = false;
+    }
+
+    // Email validation
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+      isValid = false;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = 'Please enter a valid email address';
+        isValid = false;
+      }
+    }
+
+    // Message validation
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+      isValid = false;
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simple validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Please fill in all fields.',
-      });
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Please enter a valid email address.',
-      });
+    // Validate form
+    if (!validateForm()) {
       return;
     }
 
@@ -206,8 +244,8 @@ export default function ContactSection() {
               <div className='flex gap-4'>
                 {[
                   { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/ali-mohammadi20', label: 'LinkedIn', color: 'hover:text-blue-500' },
-                  { Icon: FiGithub, href: 'https://github.com/yourusername', label: 'GitHub', color: 'hover:text-gray-300' },
-                  { Icon: FiTwitter, href: 'https://twitter.com/yourtwitter', label: 'Twitter', color: 'hover:text-blue-400' },
+                  { Icon: FiGithub, href: 'https://github.com/alimohamadi', label: 'GitHub', color: 'hover:text-gray-300' },
+                  { Icon: FiTwitter, href: 'https://twitter.com/alimohamadi', label: 'Twitter', color: 'hover:text-blue-400' },
                   { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email', color: 'hover:text-red-500' }
                 ].map(({ Icon, href, label, color }, index) => (
                   <motion.a
@@ -240,46 +278,55 @@ export default function ContactSection() {
           >
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div>
-                <label htmlFor='name' className='block mb-2 text-sm font-medium'>
-                  Name
+                <label htmlFor='name' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                  <FiUser /> Name
                 </label>
                 <input
                   type='text'
                   id='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
+                  className={`glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                    errors.name ? 'focus:ring-red-500 border border-red-500' : 'focus:ring-primary'
+                  }`}
                   placeholder='Your name'
                   disabled={isSubmitting}
                 />
+                {errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
               </div>
               <div>
-                <label htmlFor='email' className='block mb-2 text-sm font-medium'>
-                  Email
+                <label htmlFor='email' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                  <FiMail /> Email
                 </label>
                 <input
                   type='email'
                   id='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
+                  className={`glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                    errors.email ? 'focus:ring-red-500 border border-red-500' : 'focus:ring-primary'
+                  }`}
                   placeholder='your.email@example.com'
                   disabled={isSubmitting}
                 />
+                {errors.email && <p className='text-red-500 text-sm mt-1'>{errors.email}</p>}
               </div>
               <div>
-                <label htmlFor='message' className='block mb-2 text-sm font-medium'>
-                  Message
+                <label htmlFor='message' className='block mb-2 text-sm font-medium flex items-center gap-2'>
+                  <FiMessageSquare /> Message
                 </label>
                 <textarea
                   id='message'
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
+                  className={`glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 transition-all ${
+                    errors.message ? 'focus:ring-red-500 border border-red-500' : 'focus:ring-primary'
+                  }`}
                   placeholder='Your message...'
                   disabled={isSubmitting}
                 ></textarea>
+                {errors.message && <p className='text-red-500 text-sm mt-1'>{errors.message}</p>}
               </div>
 
               <p className='text-gray-400 text-sm'>

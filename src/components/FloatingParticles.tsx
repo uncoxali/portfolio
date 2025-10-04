@@ -7,8 +7,21 @@ export default function FloatingParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isActive, setIsActive] = useState(true);
+  const [particleCount, setParticleCount] = useState(100);
+
+  // Check if user prefers reduced motion
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    // Exit early if user prefers reduced motion
+    if (mediaQuery.matches) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -19,6 +32,10 @@ export default function FloatingParticles() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      
+      // Adjust particle count based on screen size
+      const newParticleCount = Math.min(150, Math.max(50, Math.floor((window.innerWidth * window.innerHeight) / 8000)));
+      setParticleCount(newParticleCount);
     };
 
     resizeCanvas();
@@ -50,12 +67,12 @@ export default function FloatingParticles() {
         this.y = Math.random() * canvas.height;
         this.originalSize = Math.random() * 3 + 1;
         this.size = this.originalSize;
-        this.speedX = Math.random() * 3 - 1.5;
-        this.speedY = Math.random() * 3 - 1.5;
+        this.speedX = Math.random() * 1 - 0.5; // Reduced speed for better performance
+        this.speedY = Math.random() * 1 - 0.5;
         this.color = `hsl(${Math.random() * 60 + 220}, 70%, 60%)`;
         this.opacity = Math.random() * 0.5 + 0.1;
         this.angle = 0;
-        this.va = Math.random() * 0.05 - 0.025;
+        this.va = Math.random() * 0.02 - 0.01; // Reduced velocity
         this.oscillation = Math.random() * 10;
       }
 
@@ -65,26 +82,26 @@ export default function FloatingParticles() {
         this.angle += this.va;
         
         // Oscillation effect
-        this.x += Math.sin(this.angle) * 0.5;
-        this.y += Math.cos(this.angle) * 0.5;
+        this.x += Math.sin(this.angle) * 0.3; // Reduced oscillation
+        this.y += Math.cos(this.angle) * 0.3;
 
         // Bounce off edges
         if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
         if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
 
-        // Mouse interaction
+        // Mouse interaction with reduced force
         const dx = this.x - mousePosition.x;
         const dy = this.y - mousePosition.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < 100) {
-          const force = (100 - distance) / 100;
-          this.x += dx * force * 0.05;
-          this.y += dy * force * 0.05;
+        if (distance < 80) { // Reduced interaction radius
+          const force = (80 - distance) / 80;
+          this.x += dx * force * 0.02; // Reduced force
+          this.y += dy * force * 0.02;
         }
 
         // Pulsing effect
-        this.size = this.originalSize + Math.sin(Date.now() / 1000 + this.oscillation) * 0.5;
+        this.size = this.originalSize + Math.sin(Date.now() / 2000 + this.oscillation) * 0.3; // Slower pulsing
       }
 
       draw() {
@@ -114,7 +131,6 @@ export default function FloatingParticles() {
 
     // Create particles
     const particles: Particle[] = [];
-    const particleCount = Math.min(150, Math.floor((window.innerWidth * window.innerHeight) / 5000));
 
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle(canvas));
@@ -130,10 +146,10 @@ export default function FloatingParticles() {
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 100) {
-            const opacity = (1 - distance / 100) * 0.2;
+          if (distance < 80) { // Reduced connection distance for performance
+            const opacity = (80 - distance) / 80 * 0.1; // Reduced opacity
             ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.3; // Thinner lines
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -148,7 +164,10 @@ export default function FloatingParticles() {
     
     const animate = () => {
       if (!ctx || !canvas || !isActive) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Clear with a semi-transparent fill for trail effect
+      ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw connections first
       connectParticles();
@@ -169,7 +188,12 @@ export default function FloatingParticles() {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mousePosition, isActive]);
+  }, [mousePosition, isActive, particleCount, prefersReducedMotion]);
+
+  // Exit early if user prefers reduced motion
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   // Toggle particle activity on click
   const toggleActivity = () => {
@@ -181,6 +205,7 @@ export default function FloatingParticles() {
       <canvas
         ref={canvasRef}
         className='absolute top-0 left-0 w-full h-full pointer-events-none z-0'
+        aria-hidden="true"
       />
       {/* Hidden toggle button for debugging */}
       <button 

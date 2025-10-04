@@ -1,11 +1,22 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 
 export default function SmoothScrolling({ children }: { children: ReactNode }) {
+  const lenisRef = useRef<any>(null);
+
   useEffect(() => {
     // Check if we're in browser environment
     if (typeof window === 'undefined') return;
+
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      // Don't initialize smooth scrolling if user prefers reduced motion
+      return;
+    }
+
+    let cleanup: (() => void) | undefined;
 
     // Import Lenis dynamically
     import('lenis').then((lenisModule) => {
@@ -22,6 +33,8 @@ export default function SmoothScrolling({ children }: { children: ReactNode }) {
         infinite: false,
       });
 
+      lenisRef.current = lenis;
+
       function raf(time: number) {
         lenis.raf(time);
         requestAnimationFrame(raf);
@@ -29,10 +42,14 @@ export default function SmoothScrolling({ children }: { children: ReactNode }) {
 
       requestAnimationFrame(raf);
 
-      return () => {
+      cleanup = () => {
         lenis.destroy();
       };
     });
+
+    return () => {
+      if (cleanup) cleanup();
+    };
   }, []);
 
   return <>{children}</>;

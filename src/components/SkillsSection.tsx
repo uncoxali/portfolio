@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiStar, FiBarChart2, FiCode, FiDatabase, FiLayout } from 'react-icons/fi';
+import { FiStar, FiBarChart2, FiCode, FiDatabase, FiLayout, FiZap } from 'react-icons/fi';
 
 export default function SkillsSection() {
   const [hoveredSkill, setHoveredSkill] = useState<number | null>(null);
@@ -199,8 +199,9 @@ export default function SkillsSection() {
             return (
               <motion.div
                 key={index}
-                whileHover={{ y: -5 }}
-                className='glass p-5 rounded-xl text-center'
+                whileHover={{ y: -5, scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className='glass p-5 rounded-xl text-center cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-primary/20'
               >
                 <div className='flex justify-center mb-2'>
                   <Icon className='text-primary text-2xl' />
