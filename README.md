@@ -1,37 +1,18 @@
-# Professional Portfolio/Resume Website
+# Portfolio Website
 
-A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScript, Tailwind CSS, Framer Motion, and React Three Fiber.
+A modern, responsive portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion.
 
 ## Features
 
-- **Dark mode with enhanced glassmorphism effects**
-- **Stunning hero section** with animated gradient background and typing effect
-- **Micro-interactions** on every interactive element
-- **Parallax scrolling effects**
-- **Smooth page transitions**
-- **Responsive design** for all devices
-- **Modern, minimalist aesthetic** with bold typography
-- **Animated floating particles** background with connections
-- **Custom cursor design** with hover and click effects
-- **Magnetic button effects**
-- **Text reveal animations**
-- **3D elements** with React Three Fiber
-- **Smooth scrolling** with Lenis
-- **Performance optimized** (lazy loading, code splitting)
-- **Tabbed content sections**
-- **Expandable experience cards**
-- **Enhanced form validation and feedback**
-- **Chaos Toolbar** with interactive tools (inspired by Josh W. Comeau)
-- **Whimsical animations** throughout the site
-
-## Tech Stack
-
-- **Next.js 14+** with App Router
-- **TypeScript**
-- **Tailwind CSS** for styling
-- **Framer Motion** for advanced animations
-- **React Three Fiber** for 3D elements
-- **Lenis** for smooth scrolling
+- Responsive design that works on all devices
+- Dark/light mode toggle
+- Smooth scrolling navigation
+- Animated sections with Framer Motion
+- 3D elements with Three.js
+- Progressive Web App (PWA) support
+- Cookie consent management
+- Visitor counter
+- Contact form with email functionality
 
 ## Enhanced Sections
 
@@ -40,7 +21,7 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 3. **Skills** - Categorized skill cards with hover effects and proficiency levels, category filtering
 4. **Experience** - Timeline with expandable details and key achievements, company logos
 5. **Projects** - Grid layout with enhanced hover effects, project links, technology tags, category filtering
-6. **Contact** - Direct contact information with social media links and hover effects
+6. **Contact** - Contact form with validation and email functionality, direct contact information with social media links and hover effects
 7. **Chaos Toolbar** - Interactive toolbar with grabber, eraser, bomb, and wand tools (inspired by Josh W. Comeau)
 
 ## Getting Started
@@ -57,36 +38,71 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
    npm run dev
    ```
 
-3. Open [http://localhost:3001](http://localhost:3001) in your browser
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Environment Variables
+
+For the contact form to work properly, you need to set the following environment variables:
+
+```env
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password_or_app_specific_password
+EMAIL_TO=your_email@example.com
+```
+
+### For Gmail Users
+
+If you're using Gmail, you'll need to use an App Password instead of your regular password:
+
+1. Enable 2-Factor Authentication on your Google account
+2. Generate an App Password:
+   - Go to your Google Account settings
+   - Navigate to Security > 2-Step Verification > App passwords
+   - Generate a new app password for "Mail"
+   - Use this app password as your EMAIL_PASS
+
+### For Other Email Providers
+
+You can configure the email service in `src/app/api/contact/route.ts`. The current implementation uses Gmail, but you can modify it for other providers:
+
+```javascript
+const transporter = nodemailer.createTransport({
+  service: 'your-email-service', // e.g., 'hotmail', 'yahoo', etc.
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+```
+
+For more complex configurations (like SMTP), you can replace the service option with host, port, and secure options:
+
+```javascript
+const transporter = nodemailer.createTransport({
+  host: 'your-smtp-host.com',
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+```
 
 ## Deployment
 
 This portfolio can be deployed to Vercel, Netlify, or any other hosting platform that supports Next.js.
 
-## Customization
+### Deploying to Vercel
 
-To customize the content with your LinkedIn projects:
-
-1. Update the projects in [src/components/ProjectsSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/ProjectsSection.tsx) with your actual projects from your LinkedIn profile
-
-2. Update the information in the components:
-
-   - [src/components/HeroSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/HeroSection.tsx)
-   - [src/components/AboutSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/AboutSection.tsx)
-   - [src/components/SkillsSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/SkillsSection.tsx)
-   - [src/components/ExperienceSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/ExperienceSection.tsx)
-   - [src/components/ProjectsSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/ProjectsSection.tsx)
-   - [src/components/ContactSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/ContactSection.tsx)
-
-3. Modify the social links in:
-
-   - [src/components/HeroSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/HeroSection.tsx)
-   - [src/components/ContactSection.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/ContactSection.tsx)
-
-4. Update the navigation in:
-   - [src/components/Navigation.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/Navigation.tsx)
-
-See [JOSH_STYLE_ENHANCEMENTS.md](file:///Users/alimohamadi/Desktop/portfolio/JOSH_STYLE_ENHANCEMENTS.md) for detailed documentation on all the enhancements made to bring your portfolio closer to the quality of Josh W. Comeau's website.
+1. Push your code to a GitHub repository
+2. Sign up/log in to Vercel
+3. Create a new project and import your repository
+4. Configure the environment variables in the Vercel dashboard:
+   - Go to your project settings
+   - Navigate to Environment Variables
+   - Add EMAIL_USER, EMAIL_PASS, and EMAIL_TO with your values
+5. Deploy!
 
 ## License
 
