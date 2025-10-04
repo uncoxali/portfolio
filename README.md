@@ -4,20 +4,25 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 
 ## Features
 
-- **Dark mode with glassmorphism effects**
-- **Stunning hero section** with animated gradient background
+- **Dark mode with enhanced glassmorphism effects**
+- **Stunning hero section** with animated gradient background and typing effect
 - **Micro-interactions** on every interactive element
 - **Parallax scrolling effects**
 - **Smooth page transitions**
 - **Responsive design** for all devices
 - **Modern, minimalist aesthetic** with bold typography
-- **Animated floating particles** background
-- **Custom cursor design**
+- **Animated floating particles** background with connections
+- **Custom cursor design** with hover and click effects
 - **Magnetic button effects**
 - **Text reveal animations**
 - **3D elements** with React Three Fiber
 - **Smooth scrolling** with Lenis
 - **Performance optimized** (lazy loading, code splitting)
+- **Tabbed content sections**
+- **Expandable experience cards**
+- **Enhanced form validation and feedback**
+- **Chaos Toolbar** with interactive tools (inspired by Josh W. Comeau)
+- **Whimsical animations** throughout the site
 
 ## Tech Stack
 
@@ -28,14 +33,15 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
 - **React Three Fiber** for 3D elements
 - **Lenis** for smooth scrolling
 
-## Sections
+## Enhanced Sections
 
-1. **Hero Section** - Animated name/title reveal, floating particles, call-to-action buttons
-2. **About Me** - Brief introduction with animated stats/skills
-3. **Skills** - Interactive skill cards with hover effects and proficiency levels
-4. **Experience** - Timeline with smooth reveal animations
-5. **Projects** - Grid layout with 3D card effects on hover, project images, descriptions
-6. **Contact** - Animated contact form with social media links
+1. **Hero Section** - Animated name/title reveal with typing effect, floating particles, call-to-action buttons with hover effects
+2. **About Me** - Tabbed interface for different content sections, animated stats/skills
+3. **Skills** - Categorized skill cards with hover effects and proficiency levels, category filtering
+4. **Experience** - Timeline with expandable details and key achievements, company logos
+5. **Projects** - Grid layout with enhanced hover effects, project links, technology tags, category filtering
+6. **Contact** - Animated contact form with validation, social media links with hover effects
+7. **Chaos Toolbar** - Interactive toolbar with grabber, eraser, bomb, and wand tools (inspired by Josh W. Comeau)
 
 ## Getting Started
 
@@ -51,7 +57,7 @@ A cutting-edge, modern portfolio/resume website built with Next.js 14+, TypeScri
    npm run dev
    ```
 
-3. Open [http://localhost:3005](http://localhost:3005) in your browser
+3. Open [http://localhost:3001](http://localhost:3001) in your browser
 
 ## Deployment
 
@@ -80,10 +86,8 @@ To customize the content with your LinkedIn projects:
 4. Update the navigation in:
    - [src/components/Navigation.tsx](file:///Users/alimohamadi/Desktop/portfolio/src/components/Navigation.tsx)
 
-See [CUSTOMIZATION_GUIDE.md](file:///Users/alimohamadi/Desktop/portfolio/CUSTOMIZATION_GUIDE.md) for detailed instructions on how to customize each section with your LinkedIn profile information.
+See [JOSH_STYLE_ENHANCEMENTS.md](file:///Users/alimohamadi/Desktop/portfolio/JOSH_STYLE_ENHANCEMENTS.md) for detailed documentation on all the enhancements made to bring your portfolio closer to the quality of Josh W. Comeau's website.
 
 ## License
 
 This project is licensed under the MIT License.
-# portfolio
-# portfolio

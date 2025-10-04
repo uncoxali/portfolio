@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail } from 'react-icons/fi';
-import MagneticButton from '@/components/MagneticButton';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiCheck, FiX, FiSend, FiMapPin, FiPhone } from 'react-icons/fi';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -20,6 +19,18 @@ export default function ContactSection() {
     type: null,
     message: '',
   });
+
+  const controls = useAnimation();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (submitStatus.type) {
+      controls.start({ 
+        scale: [1, 1.05, 1],
+        transition: { duration: 0.3 }
+      });
+    }
+  }, [submitStatus, controls]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -95,8 +106,14 @@ export default function ContactSection() {
   };
 
   return (
-    <section id='contact' className='py-20 px-4'>
-      <div className='container mx-auto'>
+    <section id='contact' className='py-20 px-4 relative overflow-hidden'>
+      {/* Background elements */}
+      <div className='absolute inset-0 pointer-events-none'>
+        <div className='absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-primary/5 to-transparent'></div>
+        <div className='absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-secondary/5 to-transparent'></div>
+      </div>
+
+      <div className='container mx-auto relative z-10'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -104,86 +121,122 @@ export default function ContactSection() {
           transition={{ duration: 0.8 }}
           className='text-center mb-16'
         >
-          <h2 className='text-4xl font-bold mb-4'>Get In Touch</h2>
-          <div className='w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto'></div>
+          <h2 className='text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary'>
+            Get In Touch
+          </h2>
+          <div className='w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full'></div>
         </motion.div>
 
-        <div className='grid md:grid-cols-2 gap-12'>
+        <div className='grid md:grid-cols-2 gap-12 max-w-6xl mx-auto'>
+          {/* Contact information */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className='space-y-8'
           >
-            <h3 className='text-2xl font-semibold mb-6'>Let's Talk</h3>
-            <p className='text-gray-400 mb-8'>
-              I'm currently available for freelance work and open to new opportunities. Feel free to
-              reach out if you want to collaborate or just say hello! You can send me a direct email
-              at alif.mohamady20@gmail.com
-            </p>
-
-            <div className='space-y-4'>
-              <div className='flex items-center'>
-                <FiMail className='text-primary text-xl mr-4' />
-                <span>alif.mohamady20@gmail.com</span>
-              </div>
-              <div className='flex items-center'>
-                <FiLinkedin className='text-primary text-xl mr-4' />
-                <span>linkedin.com/in/ali-mohammadi20</span>
-              </div>
-              <div className='flex items-center'>
-                <FiGithub className='text-primary text-xl mr-4' />
-                <span>github.com/yourusername</span>
-              </div>
-              <div className='flex items-center'>
-                <FiTwitter className='text-primary text-xl mr-4' />
-                <span>@yourtwitter</span>
-              </div>
+            <div>
+              <h3 className='text-2xl font-semibold mb-6'>Let's Connect</h3>
+              <p className='text-gray-400 mb-8'>
+                I'm currently available for freelance work and open to new opportunities. Feel free to
+                reach out if you want to collaborate or just say hello! You can send me a direct email
+                at <a href="mailto:alif.mohamady20@gmail.com" className="text-primary hover:underline">alif.mohamady20@gmail.com</a>
+              </p>
             </div>
 
-            <div className='flex gap-4 mt-8'>
-              <MagneticButton
-                key={0}
-                href='https://www.linkedin.com/in/ali-mohammadi20'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group'
+            {/* Contact details */}
+            <div className='space-y-6'>
+              <motion.div
+                className='flex items-start group'
+                whileHover={{ x: 5 }}
               >
-                <FiLinkedin className='text-xl group-hover:scale-110 transition-transform duration-300' />
-              </MagneticButton>
-              <MagneticButton
-                key={1}
-                href='https://github.com/yourusername'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group'
+                <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
+                  <FiMail className='text-primary text-xl' />
+                </div>
+                <div>
+                  <p className='text-gray-400 text-sm'>Email</p>
+                  <a href="mailto:alif.mohamady20@gmail.com" className="hover:text-primary transition-colors">alif.mohamady20@gmail.com</a>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                className='flex items-start group'
+                whileHover={{ x: 5 }}
               >
-                <FiGithub className='text-xl group-hover:scale-110 transition-transform duration-300' />
-              </MagneticButton>
-              <MagneticButton
-                key={2}
-                href='https://twitter.com/yourtwitter'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group'
+                <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
+                  <FiPhone className='text-primary text-xl' />
+                </div>
+                <div>
+                  <p className='text-gray-400 text-sm'>Phone</p>
+                  <a href="tel:+989104866595" className="hover:text-primary transition-colors">+98 910 486 6595</a>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                className='flex items-start group'
+                whileHover={{ x: 5 }}
               >
-                <FiTwitter className='text-xl group-hover:scale-110 transition-transform duration-300' />
-              </MagneticButton>
-              <MagneticButton
-                key={3}
-                href='mailto:alif.mohamady20@gmail.com'
-                className='glass w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300 group'
+                <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
+                  <FiMapPin className='text-primary text-xl' />
+                </div>
+                <div>
+                  <p className='text-gray-400 text-sm'>Location</p>
+                  <p className="text-gray-300">Tehran, Iran (Remote Worldwide)</p>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                className='flex items-start group'
+                whileHover={{ x: 5 }}
               >
-                <FiMail className='text-xl group-hover:scale-110 transition-transform duration-300' />
-              </MagneticButton>
+                <div className='glass w-12 h-12 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/20 transition-colors flex-shrink-0'>
+                  <FiLinkedin className='text-primary text-xl' />
+                </div>
+                <div>
+                  <p className='text-gray-400 text-sm'>LinkedIn</p>
+                  <a href="https://www.linkedin.com/in/ali-mohammadi20" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">linkedin.com/in/ali-mohammadi20</a>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Social links */}
+            <div>
+              <h4 className='text-lg font-semibold mb-4'>Follow Me</h4>
+              <div className='flex gap-4'>
+                {[
+                  { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/ali-mohammadi20', label: 'LinkedIn', color: 'hover:text-blue-500' },
+                  { Icon: FiGithub, href: 'https://github.com/yourusername', label: 'GitHub', color: 'hover:text-gray-300' },
+                  { Icon: FiTwitter, href: 'https://twitter.com/yourtwitter', label: 'Twitter', color: 'hover:text-blue-400' },
+                  { Icon: FiMail, href: 'mailto:alif.mohamady20@gmail.com', label: 'Email', color: 'hover:text-red-500' }
+                ].map(({ Icon, href, label, color }, index) => (
+                  <motion.a
+                    key={index}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={`glass w-12 h-12 rounded-full flex items-center justify-center text-gray-400 ${color} transition-colors duration-300 group`}
+                    whileHover={{ 
+                      y: -5,
+                      backgroundColor: "rgba(99, 102, 241, 0.2)"
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <Icon className='text-xl group-hover:scale-110 transition-transform duration-300' />
+                  </motion.a>
+                ))}
+              </div>
             </div>
           </motion.div>
 
+          {/* Contact form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            ref={formRef}
           >
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div>
@@ -195,7 +248,7 @@ export default function ContactSection() {
                   id='name'
                   value={formData.name}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary'
+                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
                   placeholder='Your name'
                   disabled={isSubmitting}
                 />
@@ -209,7 +262,7 @@ export default function ContactSection() {
                   id='email'
                   value={formData.email}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary'
+                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
                   placeholder='your.email@example.com'
                   disabled={isSubmitting}
                 />
@@ -223,39 +276,63 @@ export default function ContactSection() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary'
+                  className='glass w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all'
                   placeholder='Your message...'
                   disabled={isSubmitting}
                 ></textarea>
               </div>
 
-              <p className='text-gray-400 text-sm mb-4'>
+              <p className='text-gray-400 text-sm'>
                 * All messages will be sent directly to Ali Mohammadi's email
               </p>
 
-              {submitStatus.type && (
-                <div
-                  className={`p-3 rounded-lg text-sm ${
-                    submitStatus.type === 'success'
-                      ? 'bg-green-900/30 text-green-400 border border-green-800/50'
-                      : 'bg-red-900/30 text-red-400 border border-red-800/50'
-                  }`}
-                >
-                  {submitStatus.message}
-                </div>
-              )}
+              <motion.div
+                animate={controls}
+              >
+                {submitStatus.type && (
+                  <div
+                    className={`p-4 rounded-lg flex items-center gap-3 ${
+                      submitStatus.type === 'success'
+                        ? 'bg-green-900/30 text-green-400 border border-green-800/50'
+                        : 'bg-red-900/30 text-red-400 border border-red-800/50'
+                    }`}
+                  >
+                    {submitStatus.type === 'success' ? (
+                      <FiCheck className='text-xl' />
+                    ) : (
+                      <FiX className='text-xl' />
+                    )}
+                    <span>{submitStatus.message}</span>
+                  </div>
+                )}
+              </motion.div>
 
-              <button
+              <motion.button
                 type='submit'
                 disabled={isSubmitting}
-                className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-300 ${
+                className={`w-full py-3 px-4 rounded-lg font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
                   isSubmitting
                     ? 'bg-gray-700 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80'
+                    : 'bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 shadow-lg shadow-primary/30'
                 }`}
+                whileHover={!isSubmitting ? { y: -2 } : {}}
+                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <FiSend className='text-lg' />
+                    Send Message
+                  </>
+                )}
+              </motion.button>
             </form>
           </motion.div>
         </div>

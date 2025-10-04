@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,7 +8,9 @@ import { usePathname } from 'next/navigation';
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const pathname = usePathname();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -32,6 +34,48 @@ export default function Navigation() {
     setIsOpen(false);
   }, [pathname]);
 
+  // Scrollspy functionality
+  useEffect(() => {
+    // Function to determine active section
+    const getCurrentSection = () => {
+      const sections = ['about', 'skills', 'experience', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset to detect section early
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i]);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          if (scrollPosition >= offsetTop) {
+            return sections[i];
+          }
+        }
+      }
+      return 'home';
+    };
+
+    // Update active section based on scroll position
+    const handleScroll = () => {
+      if (pathname === '/') {
+        const currentSection = getCurrentSection();
+        setActiveSection(currentSection);
+      }
+    };
+
+    // Also check on load
+    if (pathname === '/') {
+      const currentSection = getCurrentSection();
+      setActiveSection(currentSection);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [pathname]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
 
@@ -41,6 +85,7 @@ export default function Navigation() {
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
+        setActiveSection(sectionId);
         // Update URL without page reload
         window.history.pushState(null, '', href);
       }
@@ -50,13 +95,19 @@ export default function Navigation() {
     }
   };
 
+  // Determine if we're on the home page
+  const isHomePage = pathname === '/';
+
   return (
     <>
       {/* Desktop Navigation */}
-      <nav
+      <motion.nav
         className={`hidden md:flex fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled ? 'bg-dark-bg/80 backdrop-blur-md py-4' : 'py-6'
         }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         <div className='container mx-auto px-4 flex justify-between items-center'>
           <motion.div
@@ -69,36 +120,63 @@ export default function Navigation() {
           </motion.div>
 
           <div className='flex gap-8'>
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <a
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className={`font-medium transition-colors duration-300 cursor-pointer ${
-                    pathname === item.href ? 'text-primary' : 'text-gray-400 hover:text-white'
-                  }`}
+            {navItems.map((item, index) => {
+              // Extract section name from hash link
+              const sectionName = item.href.startsWith('/#')
+                ? item.href.substring(2)
+                : item.href === '/'
+                ? 'home'
+                : '';
+
+              // Determine if this item should be active
+              const isActive =
+                isHomePage &&
+                ((sectionName === '' && activeSection === 'home') ||
+                  (sectionName !== '' && activeSection === sectionName));
+
+              return (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  {item.name}
-                </a>
-              </motion.div>
-            ))}
+                  <a
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={`font-medium transition-colors duration-300 cursor-pointer relative py-2 ${
+                      isActive ? 'text-primary' : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <motion.div
+                        className='absolute bottom-0 left-0 w-full h-0.5 bg-primary'
+                        layoutId='navIndicator'
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    {!isActive && (
+                      <div className='absolute bottom-0 left-0 w-0 h-0.5 bg-primary hover:w-full transition-all duration-300' />
+                    )}
+                  </a>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.button
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className='glass px-6 py-2 rounded-full font-medium'
+            className='glass px-6 py-2 rounded-full font-medium hover:bg-primary/20 transition-all duration-300'
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Hire Me
           </motion.button>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Navigation */}
       <nav className='md:hidden fixed top-0 left-0 right-0 z-40 bg-dark-bg/80 backdrop-blur-md py-4'>
@@ -110,6 +188,7 @@ export default function Navigation() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className='glass w-10 h-10 rounded-full flex flex-col items-center justify-center gap-1'
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
             <span
               className={`block w-5 h-0.5 bg-white transition-transform duration-300 ${
@@ -162,6 +241,7 @@ export default function Navigation() {
                       <button
                         onClick={() => setIsOpen(false)}
                         className='glass w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300'
+                        aria-label='Close menu'
                       >
                         <span className='text-2xl text-gray-300'>&times;</span>
                       </button>
@@ -171,31 +251,57 @@ export default function Navigation() {
                   <div className='flex-1 flex flex-col py-6 px-6'>
                     <nav className='flex-1'>
                       <ul className='space-y-2'>
-                        {navItems.map((item) => (
-                          <li key={item.name}>
-                            <a
-                              href={item.href}
-                              onClick={(e) => {
-                                handleNavClick(e, item.href);
-                                setIsOpen(false);
-                              }}
-                              className={`block py-4 px-4 rounded-xl font-medium text-lg transition-all duration-300 ${
-                                pathname === item.href
-                                  ? 'bg-primary/20 text-primary shadow-lg'
-                                  : 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
-                              }`}
-                            >
-                              {item.name}
-                            </a>
-                          </li>
-                        ))}
+                        {navItems.map((item) => {
+                          // Extract section name from hash link
+                          const sectionName = item.href.startsWith('/#')
+                            ? item.href.substring(2)
+                            : item.href === '/'
+                            ? 'home'
+                            : '';
+
+                          // Determine if this item should be active
+                          const isActive =
+                            isHomePage &&
+                            ((sectionName === '' && activeSection === 'home') ||
+                              (sectionName !== '' && activeSection === sectionName));
+
+                          return (
+                            <li key={item.name}>
+                              <a
+                                href={item.href}
+                                onClick={(e) => {
+                                  handleNavClick(e, item.href);
+                                  setIsOpen(false);
+                                }}
+                                className={`block py-4 px-4 rounded-xl font-medium text-lg transition-all duration-300 flex items-center justify-between ${
+                                  isActive
+                                    ? 'bg-primary/20 text-primary shadow-lg'
+                                    : 'text-gray-300 hover:bg-gray-800/50 hover:text-white'
+                                }`}
+                              >
+                                <span>{item.name}</span>
+                                {isActive && (
+                                  <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    className='w-2 h-2 rounded-full bg-primary'
+                                  />
+                                )}
+                              </a>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </nav>
 
                     <div className='mt-auto pt-6 border-t border-gray-800'>
-                      <button className='w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium text-white hover:from-primary/80 hover:to-secondary/80 transition-all duration-300 shadow-lg shadow-primary/20'>
+                      <motion.button
+                        className='w-full py-4 px-6 bg-gradient-to-r from-primary to-secondary rounded-xl font-medium text-white hover:from-primary/80 hover:to-secondary/80 transition-all duration-300 shadow-lg shadow-primary/20'
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
                         Hire Me
-                      </button>
+                      </motion.button>
                     </div>
                   </div>
                 </div>

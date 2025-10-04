@@ -40,10 +40,13 @@ export async function POST(request: Request) {
           to: 'alif.mohamady20@gmail.com',
           subject: `Contact from Portfolio - ${name}`,
           html: `
+            <h2>New Contact Form Submission</h2>
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Message:</strong></p>
             <p>${message}</p>
+            <hr>
+            <p><em>Sent from portfolio website</em></p>
           `
         });
         
@@ -52,11 +55,21 @@ export async function POST(request: Request) {
         }
         */
 
-        // Simulate successful email sending
+        // Simulate successful email sending with a delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         console.log(`Email sent from ${name} (${email}): ${message}`);
 
         return NextResponse.json(
-            { message: 'Message sent successfully!' },
+            {
+                message: 'Message sent successfully!',
+                details: {
+                    name,
+                    email,
+                    message,
+                    timestamp: new Date().toISOString()
+                }
+            },
             { status: 200 }
         );
     } catch (error) {
